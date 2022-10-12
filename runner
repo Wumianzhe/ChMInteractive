@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+# Help
+Help() {
+    # display help
+    echo "Simple script to run very limited set of commands on local server"
+    echo
+    echo "Syntax: runner subcommand [command]"
+    echo "Possible subcommands are"
+    echo "setup     build docker image and go through the motions"
+    echo "migrate   short for django migration"
+    echo "run       run next argument (use quotes) inside docker"
+}
+
+if [[ "$#" -gt 2 || "$#" -eq 0 ]]; then
+    echo "too many arguments"
+    Help
+fi
+
+case $1 in
+    "setup")
+        sudo docker-compose build
+        sudo docker-compose run web python manage.py migrate
+        ;;
+    "migrate")
+        sudo docker-compose run web python manage.py migrate
+        ;;
+    "run")
+        # don't know whether you need sudo here and can't test as I have setup docker to not require sudo on my system
+        sudo docker-compose run web $2
+        ;;
+    "help")
+        Help
+        ;;
+    "")
+        echo "subcommand required"
+        Help
+        ;;
+    *)
+        echo "unknown command"
+        Help
+        ;;
+esac
