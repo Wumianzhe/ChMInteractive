@@ -9,9 +9,16 @@ def index(request):
     to_show = Method.objects.filter(name = "MidpointRect")
     return render(request, 'index.html', {'name': to_show.first()})
 
-def num(request):
-    return render(request, 'INDEX.html', {'name': ""})
+def home(request):
+    return render(request, 'INDEX.html')
 
+def about(request):
+     return render(request, 'ABOUT.html')
+
+def graph(request):
+    return render(request, 'GRAPH.html')
+def theory(request):
+    return render(request, 'THEORY.html',)
 def add(request):
     val1 = int(request.POST.get('num1', False))
     val2 = int(request.POST.get('num2', False))

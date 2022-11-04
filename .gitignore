@@ -3,6 +3,10 @@
 *.log
 tmp/
 
+*.py[cod]
+*.egg
+build
+htmlcov
 data/
 *.py[cod]
 *.egg
