@@ -4,3 +4,7 @@
 tmp/
 
 data/
+*.py[cod]
+*.egg
+build
+htmlcov
