@@ -1,0 +1,21 @@
+#+title: Notes
+
+* Introduction
+Personal notes on my part of project. That includes logic, API, and notes on ~Pixi JS~ I'm going to be using
+* Pixi
+** Display tree
+It all begins with =Stage=. Which is created by =Application=, but I'm going to be redefining that. Then tree of
+=Container=, with leaves being =Sprite=. For performance it's possible to use =Particle Container= but it has
+restrictions on sprites (must come from same texture), can't use filters and masks. None of these are restricting
+graphics it seems.
+*** Graphics
+Inherits from =Container= (a pity).
+
+Most of my work will be done here.
+
+!! Don't try to ~clear()~ and then redraw ~Graphics~ every frame. You should ideally draw them once and transform
+   resulting object
+
+*** Context
+If a method is passed as parameter, when parameter is called, ~this~ is the object calling the function, not object for
+which the method was written. To fix, ~.bind(this)~.
