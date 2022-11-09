@@ -7,11 +7,11 @@ const TerserPlugin = require('terser-webpack-plugin');
 module.exports = (env, argv) => {
   return ({
     stats: 'minimal', // Keep console output easy to read.
-    entry: './src/index.ts', // Your program entry point
+    entry: './graph/test.ts', // Your program entry point
 
     // Your build destination
     output: {
-      path: path.resolve(__dirname, 'dist'),
+      path: path.resolve(__dirname, '../ui'),
       filename: 'bundle.js'
     },
 
@@ -30,8 +30,8 @@ module.exports = (env, argv) => {
       port: 1234, host: '0.0.0.0'
     },
 
-    // Web games are bigger than pages, disable the warnings that our game is too big.
-    performance: { hints: false },
+    // // Web games are bigger than pages, disable the warnings that our game is too big.
+    // performance: { hints: false },
 
     // Enable sourcemaps while debugging
     devtool: argv.mode === 'development' ? 'eval-source-map' : undefined,
@@ -75,10 +75,15 @@ module.exports = (env, argv) => {
 
       // Make an index.html from the template
       new HtmlWebpackPlugin({
-        template: 'src/index.ejs',
+        filename: 'test.html',
+        template: 'graph/test.ejs',
         hash: true,
         minify: false
       })
+      , new HtmlWebpackPlugin({ filename: 'INDEX.html', template: './INDEX.html' })
+      , new HtmlWebpackPlugin({ filename: 'ABOUT.html', template: './ABOUT.html' })
+      , new HtmlWebpackPlugin({ filename: 'GRAPH.html', template: './GRAPH.html' })
+      , new HtmlWebpackPlugin({ filename: 'THEORY.html', template: './THEORY.html' })
     ]
   });
 }

@@ -1,4 +1,5 @@
-import { Application, Sprite } from 'pixi.js'
+import { Application } from 'pixi.js'
+import { Scene } from './scene'
 
 const app = new Application({
     view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
@@ -9,11 +10,6 @@ const app = new Application({
     height: 480
 });
 
-const clampy = Sprite.from("clampy.png");
+const scene = new Scene(app.screen.width, app.screen.height)
 
-clampy.anchor.set(0.5);
-
-clampy.x = app.screen.width / 2;
-clampy.y = app.screen.height / 2;
-
-app.stage.addChild(clampy)
+app.stage.addChild(scene)
