@@ -30,8 +30,7 @@ module.exports = (env, argv) => {
       port: 1234, host: '0.0.0.0'
     },
 
-    // // Web games are bigger than pages, disable the warnings that our game is too big.
-    // performance: { hints: false },
+    performance: { hints: false },
 
     // Enable sourcemaps while debugging
     devtool: argv.mode === 'development' ? 'eval-source-map' : undefined,
@@ -68,11 +67,6 @@ module.exports = (env, argv) => {
     },
 
     plugins: [
-      // Copy our static assets to the final build
-      new CopyPlugin({
-        patterns: [{ from: 'static/' }],
-      }),
-
       // Make an index.html from the template
       new HtmlWebpackPlugin({
         filename: 'test.html',

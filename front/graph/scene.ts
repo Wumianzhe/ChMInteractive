@@ -1,21 +1,23 @@
-import { Container, Sprite } from "pixi.js"
+import { Container } from "pixi.js"
+import { Grid } from "./grid"
 
 export class Scene extends Container {
-    private readonly screenWidth: number;
-    private readonly screenHeight: number;
+    private readonly sceneWidth: number;
+    private readonly sceneHeight: number;
 
-    private clampy: Sprite;
-    constructor(screenWidth: number, screenHeight: number) {
+    private readonly grid: Grid;
+
+    constructor(contWidth: number, contHeight: number) {
         super()
 
-        this.screenHeight = screenHeight;
-        this.screenWidth = screenWidth;
+        this.sceneHeight = contHeight;
+        this.sceneWidth = contWidth;
 
-        this.clampy = Sprite.from("clampy.png");
+        this.grid = new Grid(this.sceneWidth, this.sceneHeight);
+        this.addChild(this.grid);
+    }
 
-        this.clampy.anchor.set(0.5);
-
-        this.clampy.x = this.screenWidth / 2;
-        this.clampy.y = this.screenHeight / 2;
+    resize(width: number, height: number) {
+        this.grid.resize(width, height);
     }
 }
