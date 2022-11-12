@@ -23,13 +23,3 @@ var resize = () => {
     app.renderer.resize(parent.clientWidth, parent.clientHeight);
 }
 window.addEventListener("resize", resize);
-
-const loadArray = (url: string) =>{
-    fetch(url).then(response => response.json()).then(json => {
-        for (var prop in json) {
-            console.log(json[prop]," ",prop);
-        }
-    })
-}
-
-loadArray("func_array.json");
