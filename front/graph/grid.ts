@@ -33,11 +33,6 @@ export class Grid extends Graphics {
             this.lineStyle(2, 0x000000)
             this.moveTo(this.view.width / 2 + shift * i, 0).lineTo(this.view.width / 2 + shift * i, this.view.height);
             this.moveTo(this.view.width / 2 - shift * i, 0).lineTo(this.view.width / 2 - shift * i, this.view.height);
-
-
-           
-            //this.moveTo(0, this.view.height / 2).lineTo(this.view.width, this.view.height / 2);
-            
         }
     }
     drawTertiary() {
