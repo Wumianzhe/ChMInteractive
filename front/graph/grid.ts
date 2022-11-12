@@ -1,32 +1,31 @@
-import { Graphics } from "pixi.js"
+import { Graphics, Rectangle } from "pixi.js"
+import { Scene } from "./scene"
 
 export class Grid extends Graphics {
-    private screenWidth: number;
-    private screenHeight: number;
-
-    constructor(contWidth: number, contHeight: number) {
+    override parent: Scene;
+    private view: Rectangle;
+    constructor(parent: Scene) {
         super()
 
-        this.screenWidth = contWidth;
-        this.screenHeight = contHeight;
+        this.parent = parent
+        this.view = parent.getView();
 
         // draw lines
         this.drawMains();
         this.drawSecondary();
         this.drawTertiary()
     }
-    resize(width: number, height: number) {
+    update() {
         this.clear();
-        this.screenWidth = width;
-        this.screenHeight = height;
+        this.view = this.parent.getView();
         this.drawMains()
         this.drawSecondary();
         this.drawTertiary()
     }
     drawMains() {
         this.lineStyle(2, 0x000000)
-        this.moveTo(this.screenWidth / 2, 0).lineTo(this.screenWidth / 2, this.screenHeight);
-        this.moveTo(0, this.screenHeight / 2).lineTo(this.screenWidth, this.screenHeight / 2);
+        this.moveTo(this.view.width / 2, 0).lineTo(this.view.width / 2, this.view.height);
+        this.moveTo(0, this.view.height / 2).lineTo(this.view.width, this.view.height / 2);
     }
     drawSecondary() {
 

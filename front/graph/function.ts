@@ -14,7 +14,7 @@ export class Graph extends Graphics {
 
         this.parent = parent;
         this.values = new Array<Point>;
-        this.loadArray(url).then(() => this.draw());
+        this.loadArray(url).then(() => this.update());
     }
     async loadArray(url: string) {
         fetch(url).then(response => response.json()).then(json => {
@@ -25,9 +25,8 @@ export class Graph extends Graphics {
             }
         })
     }
-    draw() {
-        console.log(this.values);
-        console.log(this.values.length);
+    update() {
+        this.clear();
         this.lineStyle(1, 0x000000)
         this.moveTo(this.values[0].x, this.values[0].y);
         this.values.forEach((p) => {

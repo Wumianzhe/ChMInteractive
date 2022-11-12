@@ -3,12 +3,12 @@ import { Grid } from "./grid"
 import { Graph } from "./function"
 
 export class Scene extends Container {
-    private readonly sceneWidth: number;
-    private readonly sceneHeight: number;
+    private sceneWidth: number;
+    private sceneHeight: number;
 
     private readonly grid: Grid;
     private func: Graph;
-    private screen: Rectangle;
+    screen: Rectangle;
 
     constructor(viewWidth: number, viewHeight: number) {
         super()
@@ -17,7 +17,7 @@ export class Scene extends Container {
         this.sceneWidth = viewWidth;
         this.screen = new Rectangle(-10, 4, 20, 8);
 
-        this.grid = new Grid(this.sceneWidth, this.sceneHeight);
+        this.grid = new Grid(this);
         this.addChild(this.grid);
 
         this.func = new Graph(this, "func_array.json");
@@ -36,7 +36,14 @@ export class Scene extends Container {
         return P;
     }
 
+    getView(): Rectangle {
+        return new Rectangle(0, 0, this.sceneWidth, this.sceneHeight);
+    }
+
     resize(width: number, height: number) {
-        this.grid.resize(width, height);
+        this.sceneWidth = width;
+        this.sceneHeight = height;
+        this.grid.update();
+        this.func.update();
     }
 }
