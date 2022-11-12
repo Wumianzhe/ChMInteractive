@@ -23,14 +23,32 @@ export class Grid extends Graphics {
         this.drawTertiary()
     }
     drawMains() {
-        this.lineStyle(2, 0x000000)
+        this.lineStyle(3, 0x000000)
         this.moveTo(this.view.width / 2, 0).lineTo(this.view.width / 2, this.view.height);
         this.moveTo(0, this.view.height / 2).lineTo(this.view.width, this.view.height / 2);
     }
     drawSecondary() {
+        var shift = 160
+        for (let i = 0; i < this.view.width / shift; i++) {
+            this.lineStyle(2, 0x000000)
+            this.moveTo(this.view.width / 2 + shift * i, 0).lineTo(this.view.width / 2 + shift * i, this.view.height);
+            this.moveTo(this.view.width / 2 - shift * i, 0).lineTo(this.view.width / 2 - shift * i, this.view.height);
 
+
+           
+            //this.moveTo(0, this.view.height / 2).lineTo(this.view.width, this.view.height / 2);
+            
+        }
     }
     drawTertiary() {
-
+       var shift = 40
+        for (let i = 0; i < this.view.width / 40; i++) {
+            this.lineStyle(1, 0x000000)
+            this.moveTo(this.view.width / 2 + shift * i, 0).lineTo(this.view.width / 2 + shift * i, this.view.height);
+            this.moveTo(this.view.width / 2 - shift * i, 0).lineTo(this.view.width / 2 - shift * i, this.view.height);
+            this.moveTo(0, this.view.height / 2 + shift * i).lineTo(this.view.width, this.view.height / 2 + shift * i);
+            this.moveTo(0, this.view.height / 2 - shift * i).lineTo(this.view.width, this.view.height / 2 - shift * i);
+        }
     }
+
 }
