@@ -15,8 +15,8 @@
               </a>
         
               <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="home" class="nav-link px-2 link-secondary">Home</a></li>
-                <li><a href="graph" class="nav-link px-2 link-dark">Graph</a></li>
+                <li><a href="home" class="nav-link px-2 link-dark">Home</a></li>
+                <li><a href="graph" class="nav-link px-2 link-secondary">Graph</a></li>
                 <li><a href="theory" class="nav-link px-2 link-dark">Theory</a></li>
                 <li><a href="about" class="nav-link px-2 link-dark">About</a></li>
               </ul>
@@ -29,8 +29,8 @@
 
             <div class="row">
 
-                <div class="col-sm-4">
-                    <form action="#" method="post" enctype="multipart/form-data">
+                <div class="col-sm-3 mr-2">
+                    <!--form action="#" method="post" enctype="multipart/form-data"-->
 
                        <div class="form-group">
                         <label>Function:</label>
@@ -41,19 +41,19 @@
                        <div class="form-group">
                        <div class="row">
                         <label>Limits:</label>
-                        <div class="col-sm-3"><input type="number" class="form-control" id="from" placeholder="from" name="from"></div>
-                        <div class="col-sm-3"><input type="number" class="form-control" id="to" placeholder="to" name="to"></div>
+                        <div class="col-sm-5"><input type="number" class="form-control" id="from" placeholder="from" name="from"></div>
+                        <div class="col-sm-5"><input type="number" class="form-control" id="to" placeholder="to" name="to"></div>
                        </div>
                        <br/>
         
                        </div>
                        <br/>
 
-                       <button type="submit" class="btn btn-primary">Plot</button>
+                       <button type="submit" class="btn btn-primary" id = "sub_btn">Plot</button>
 
-                    </form>
+                    <!--/form-->
                 </div>
-                
+                <script type="module" src="graph.bundle.js"></script>
 
                 <div class="col-lg">Graph</div>
             </div>
