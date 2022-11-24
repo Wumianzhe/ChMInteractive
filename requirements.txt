@@ -2,3 +2,4 @@ Django~=4.1
 psycopg2>=2.8
 sympy == 1.11
 django-cors-headers >= 3.13
+numpy ~=1.23

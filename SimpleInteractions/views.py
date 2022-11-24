@@ -1,11 +1,11 @@
 #import imp
-from unicodedata import name
-from django.shortcuts import render
+
 from django.http import HttpResponse
 from SimpleInteractions.models import Method
 from .models import Method
-#from sympy import Integral
-#roots finders
+from sympy.abc import x
+from sympy import lambdify
+import numpy as np
 #bisection method
 def bisection(f, a, b, eps):
     while(abs(b - a)> 2 * eps):
@@ -14,7 +14,7 @@ def bisection(f, a, b, eps):
             b = c
         else:
             a = c
-    result = (a + b) / 2
+        result = (a + b) / 2
     return result
 
 #secant method		
@@ -60,23 +60,17 @@ def runge_kutta_plot(f, n, startpoint, a, b):
 #     to_show = Method.objects.filter(name = "MidpointRect")
 #     return render(request, 'index.html', {'name': to_show.first()})
 
-def home(request):
-    return HttpResponse("somedata")
-    #return render(request, 'INDEX.html')
+def bisection_response(request, *args, **kwargs):
+    f = lambdify(x,request.GET["f"])
+    a = float(request.GET["from"])
+    b = float(request.GET["to"])
+    eps = float(request.GET["epsilon"])
+    result = bisection(f, a, b, eps)
+    
+    resdict = {
+        "f": {x:f(x) for x in np.linspace(-10,10,200)}
+    }
+    print(resdict["f"])
 
-# def about(request):
-#      return render(request, 'ABOUT.html')
-
-# def graph(request):
-#     return render(request, 'GRAPH.html')
-
-# def theory(request):
-#     return render(request, 'THEORY.html')
-
-
-
-# def add(request):
-#     val1 = int(request.POST.get('num1', False))
-#     val2 = int(request.POST.get('num2', False))
-#     res = 3 * val1 + val2
-#     return render(request, "result.html", {'result':res}) 
+    response = HttpResponse(result)
+    return response
