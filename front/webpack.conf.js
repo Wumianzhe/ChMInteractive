@@ -7,12 +7,14 @@ const TerserPlugin = require('terser-webpack-plugin');
 module.exports = (env, argv) => {
   return ({
     stats: 'minimal', // Keep console output easy to read.
-    entry: './graph/test.ts', // Your program entry point
-
+    entry: {
+      main: './graph/test.ts', // Your program entry point
+      graph: ['./js/main_graph.js','./js/utils_graph.js']
+    },
     // Your build destination
     output: {
       path: path.resolve(__dirname, '../ui'),
-      filename: 'bundle.js'
+      filename: '[name].bundle.js'
     },
 
     // Config for your testing server
@@ -75,13 +77,14 @@ module.exports = (env, argv) => {
       new HtmlWebpackPlugin({
         filename: 'test.html',
         template: 'graph/test.ejs',
+        chunks: ['main'],
         hash: true,
         minify: false
       })
-      , new HtmlWebpackPlugin({ filename: 'INDEX.html', template: './INDEX.html' })
-      , new HtmlWebpackPlugin({ filename: 'ABOUT.html', template: './ABOUT.html' })
-      , new HtmlWebpackPlugin({ filename: 'GRAPH.html', template: './GRAPH.html' })
-      , new HtmlWebpackPlugin({ filename: 'THEORY.html', template: './THEORY.html' })
+      , new HtmlWebpackPlugin({ filename: 'INDEX.html', template: './INDEX.html', chunks: ['graph'] })
+      , new HtmlWebpackPlugin({ filename: 'ABOUT.html', template: './ABOUT.html', chunks: ['graph'] })
+      , new HtmlWebpackPlugin({ filename: 'GRAPH.html', template: './GRAPH.html', chunks: ['graph'] })
+      , new HtmlWebpackPlugin({ filename: 'THEORY.html', template: './THEORY.html', chunks: ['graph'] })
     ]
   });
 }

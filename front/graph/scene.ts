@@ -20,7 +20,7 @@ export class Scene extends Container {
         this.grid = new Grid(this);
         this.addChild(this.grid);
 
-        this.func = new Graph(this, "func_array.json");
+        this.func = new Graph(this, "http://localhost:8080/home/");
         this.addChild(this.func);
     }
 

@@ -1,9 +1,6 @@
 import { Graphics, Point } from "pixi.js"
 import { Scene } from "./scene"
 
-const range = (start: number, end: number): Array<number> => {
-    return Array.from({ length: (end - start) }, (_, k) => k + start)
-}
 
 export class Graph extends Graphics {
     override parent: Scene;
@@ -14,15 +11,16 @@ export class Graph extends Graphics {
 
         this.parent = parent;
         this.values = new Array<Point>;
-        this.loadArray(url).then(() => this.update());
+        this.loadArray(url)//.then(() => this.update());
     }
     async loadArray(url: string) {
         fetch(url).then(response => response.json()).then(json => {
             // stub
             // no idea why `i` ends up string and not a number
-            for (var i in range(0, 101)) {
-                this.values.push(new Point(json["args"][i], json["values"][i]));
-            }
+            //for (var i in range(0, 101)) {
+            //    this.values.push(new Point(json["args"][i], json["values"][i]));
+            //}
+            console.log(json);
         })
     }
     update() {
