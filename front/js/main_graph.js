@@ -11,7 +11,7 @@ const sub_btn_id = 'sub_btn'
 let func = document.getElementById(func_id);
 func.oninput = (e) => func = e.target.value
 
-let from = document.getElementById(from_id);
+let from = document.getElementById(from_id)
 from.oninput = (e) => from = e.target.value
 
 let to = document.getElementById(to_id);
@@ -21,6 +21,7 @@ to.oninput = (e) => to = e.target.value
 const sub_btn = document.getElementById(sub_btn_id);
 
 sub_btn.onclick = async (e) => {
+  var func_str = func.replace(/\+/gi, '%2B');
   // При нажатии кнопки в форме по умолчанию происходит перезагрузка страницы.
   // Чтобы отключить его, нужно отменить стандартное поведение события
   e.preventDefault()
@@ -29,7 +30,7 @@ sub_btn.onclick = async (e) => {
   //data = await responce.json();
 
   console.log(responce.json());
-  console.log('%s', func)
+  console.log(func_str)
   console.log(to)
   console.log(from)
 }
