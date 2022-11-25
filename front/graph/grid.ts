@@ -39,23 +39,33 @@ export class Grid extends Graphics {
         this.moveTo("left", 0).lineTo("right", 0);
     }
     drawSecondary() {
-        var shift = 200
-        for (let i = 0; i < this.view.width / shift; i++) {
+        // per side
+        const count = 10;
+        const center_h = this.view.top - this.view.height / 2;
+        const center_w = this.view.left + this.view.width / 2;
+        const step_h = this.view.height / count / 2;
+        const step_w = this.view.width / count / 2;
+        for (let i = 1; i < count; i++) {
             this.lineStyle(1, 0x000000, 0.5)
-            this.moveTo(this.view.width / 2 + shift * i, 0).lineTo(this.view.width / 2 + shift * i, this.view.height);
-            this.moveTo(this.view.width / 2 - shift * i, 0).lineTo(this.view.width / 2 - shift * i, this.view.height);
-            this.moveTo(0, this.view.height / 2 + shift * i).lineTo(this.view.width, this.view.height / 2 + shift * i);
-            this.moveTo(0, this.view.height / 2 - shift * i).lineTo(this.view.width, this.view.height / 2 - shift * i);
+            this.moveTo(center_w + i * step_w, "top").lineTo(center_w + i * step_w, "bottom");
+            this.moveTo(center_w - i * step_w, "top").lineTo(center_w - i * step_w, "bottom");
+            this.moveTo("left", center_h + i * step_h).lineTo("right", center_h + i * step_h);
+            this.moveTo("left", center_h - i * step_h).lineTo("right", center_h - i * step_h);
         }
     }
     drawTertiary() {
-        var shift = 40
-        for (let i = 0; i < this.view.width / 40; i++) {
+        // per side
+        const count = 50;
+        const center_h = this.view.top - this.view.height / 2;
+        const center_w = this.view.left + this.view.width / 2;
+        const step_h = this.view.height / count / 2;
+        const step_w = this.view.width / count / 2;
+        for (let i = 1; i < count; i++) {
             this.lineStyle(1, 0x000000, 0.3)
-            this.moveTo(this.view.width / 2 + shift * i, 0).lineTo(this.view.width / 2 + shift * i, this.view.height);
-            this.moveTo(this.view.width / 2 - shift * i, 0).lineTo(this.view.width / 2 - shift * i, this.view.height);
-            this.moveTo(0, this.view.height / 2 + shift * i).lineTo(this.view.width, this.view.height / 2 + shift * i);
-            this.moveTo(0, this.view.height / 2 - shift * i).lineTo(this.view.width, this.view.height / 2 - shift * i);
+            this.moveTo(center_w + i * step_w, "top").lineTo(center_w + i * step_w, "bottom");
+            this.moveTo(center_w - i * step_w, "top").lineTo(center_w - i * step_w, "bottom");
+            this.moveTo("left", center_h + i * step_h).lineTo("right", center_h + i * step_h);
+            this.moveTo("left", center_h - i * step_h).lineTo("right", center_h - i * step_h);
         }
     }
 

@@ -28,7 +28,7 @@ export class Graph extends Graphics {
         this.lineStyle(1, 0x000000)
         this.moveTo(this.values[0].x, this.values[0].y);
         this.values.forEach((p) => {
-            var P = this.parent.remap(p);
+            var P = this.parent.remap(p.x, p.y);
             this.lineTo(P.x, P.y);
         })
     }

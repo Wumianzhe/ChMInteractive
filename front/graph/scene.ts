@@ -1,4 +1,4 @@
-import { Container, Rectangle, Point } from "pixi.js"
+import { Container, Rectangle } from "pixi.js"
 import { Grid } from "./grid"
 import { Graph } from "./function"
 
