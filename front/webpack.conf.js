@@ -83,7 +83,7 @@ module.exports = (env, argv) => {
       })
       , new HtmlWebpackPlugin({ filename: 'INDEX.html', template: './INDEX.html', chunks: ['graph'] })
       , new HtmlWebpackPlugin({ filename: 'ABOUT.html', template: './ABOUT.html', chunks: ['graph'] })
-      , new HtmlWebpackPlugin({ filename: 'GRAPH.html', template: './GRAPH.html', chunks: ['graph'] })
+      , new HtmlWebpackPlugin({ filename: 'GRAPH.html', template: './GRAPH.html', chunks: ['graph','main'] })
       , new HtmlWebpackPlugin({ filename: 'THEORY.html', template: './THEORY.html', chunks: ['graph'] })
     ]
   });
