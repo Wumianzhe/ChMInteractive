@@ -1,24 +1,33 @@
 #import imp
-
+import json
 from django.http import HttpResponse
 from SimpleInteractions.models import Method
 from .models import Method
+from sympy import *
 from sympy.abc import x
 from sympy import lambdify
 import numpy as np
 #bisection method
 def bisection(f, a, b, eps):
+    intervals = []
     while(abs(b - a)> 2 * eps):
+        intervals.append((a,b))
         c = (a + b) / 2
         if (f(a) * f(c) < 0):
             b = c
         else:
             a = c
         result = (a + b) / 2
-    return result
+    
+    return (result,intervals)
 
 #secant method		
-def secant(f, x_0, x_1, eps, m_1, M_2):
+def secant(f, x_0, x_1, eps, a, b):
+    fst_der = diff(f)
+    snd_der = diff(fst_der)
+    interval = Interval(a,b)
+    m_1 = minimum(fst_der, x, interval)
+    M_2 = maximum(snd_der,x, interval)
     prev = x_0
     cur = x_1
     next = prev
@@ -56,21 +65,30 @@ def runge_kutta_plot(f, n, startpoint, a, b):
         ymas[i] = RK(f, xprev, yprev)
     return ymas
 
-# def index(request):
-#     to_show = Method.objects.filter(name = "MidpointRect")
-#     return render(request, 'index.html', {'name': to_show.first()})
+def secant_response(request, *args, **kwargs):
+    f = lambdify(x,request.GET["f"])
+    fstp = float(request.GET["fstp"])
+    sstp = float(request.GET["sstp"])
+    a = float(request.GET["from"])
+    b = float(request.GET["to"])
+    eps = float(request.GET["epsilon"])
+    result = secant(f, fstp, sstp, eps, a, b)
+    response = HttpResponse(result)
+    return response
 
 def bisection_response(request, *args, **kwargs):
     f = lambdify(x,request.GET["f"])
     a = float(request.GET["from"])
     b = float(request.GET["to"])
     eps = float(request.GET["epsilon"])
-    result = bisection(f, a, b, eps)
-    
+    (result,intervals) = bisection(f, a, b, eps)
     resdict = {
-        "f": {x:f(x) for x in np.linspace(-10,10,200)}
+        "f": {x:f(x) for x in np.linspace(-10,10,200)},
+        "intervals" : intervals,
+        "result" : result,
     }
-    print(resdict["f"])
+    
+    print(resdict)
 
-    response = HttpResponse(result)
+    response = HttpResponse(json.dumps(resdict))
     return response

@@ -3,11 +3,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    # path('', views.index, name='index'),
-    # path('index/', views.index, name='index'),
-    # path('add/', views.add, name='add'),
+    path('secant_response/', views.secant_response, name='secant_response'),
     path('bisection_response/', views.bisection_response, name='bisection_response'),
-    # path('about/', views.about, name='ABOUT'),
-    # path('graph/', views.graph, name='GRAPH'),
-    # path('theory/', views.theory, name='THEORY')
 ]
