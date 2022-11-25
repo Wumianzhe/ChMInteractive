@@ -18,26 +18,47 @@ def bisection(f, a, b, eps):
         else:
             a = c
         result = (a + b) / 2
-    
-    return (result,intervals)
+    return (intervals, result)
 
 #secant method		
-def secant(f, x_0, x_1, eps, a, b):
-    fst_der = diff(f)
-    snd_der = diff(fst_der)
-    interval = Interval(a,b)
-    m_1 = minimum(fst_der, x, interval)
-    M_2 = maximum(snd_der,x, interval)
+def secant(f, x_0, x_1, eps):
+    points = []
+    points.append((x_0,f(x_0)))
+    points.append((x_1,f(x_1)))
     prev = x_0
     cur = x_1
     next = prev
     prev = cur
     cur = cur + (cur - next) / (f(next) / f(cur) - 1)
-    while (M_2 / (2 * m_1) * abs(next - cur) * abs(cur - prev) > eps):
+    points.append((cur, f(cur)))
+    while(abs(next-cur)>abs(eps*next)):
         next = prev
         prev = cur
         cur = cur + (cur - next) / (f(next) / f(cur) - 1)
-    return cur
+        points.append((cur, f(cur)))
+    return (points, cur)
+#Newton method
+def newton(func, a, b, e):
+    intervals = []
+    fder = diff(func)
+    sder = diff(fder)
+    f = lambdify(x, func)
+    fderl = lambdify(x,sder)
+    sderl = lambdify(x,fder)
+    while (abs(a - b) > 2 * e):
+        intervals.append((a, b))
+        if (f(a) * sderl(a) < 0):
+            a = a - f(a) * (a - b) / (f(a) - f(b))
+        elif (f(a) * sderl(a) > 0):
+            a = a - f(a) / fderl(a)
+        if (f(b) * sderl(b) < 0):
+            b - f(b) * (b - a) / (f(b) - f(a))
+        elif (f(b) * sderl(b) > 0):
+            b = b - f(b) / fderl(b)
+    intervals.append((a, b))
+    result = (a + b) / 2
+    return (intervals, result)
+
 
 #Integration
 #midpoint rectangles
@@ -69,26 +90,38 @@ def secant_response(request, *args, **kwargs):
     f = lambdify(x,request.GET["f"])
     fstp = float(request.GET["fstp"])
     sstp = float(request.GET["sstp"])
-    a = float(request.GET["from"])
-    b = float(request.GET["to"])
-    eps = float(request.GET["epsilon"])
-    result = secant(f, fstp, sstp, eps, a, b)
-    response = HttpResponse(result)
+    (points, result) = secant(f, fstp, sstp, 1e-6)
+    resdict = {
+        "f": {x:f(x) for x in np.linspace(-10,10,200)},
+        "points" : points,
+        "result" : result,
+    }
+    response = HttpResponse(json.dumps(resdict))
     return response
 
 def bisection_response(request, *args, **kwargs):
     f = lambdify(x,request.GET["f"])
     a = float(request.GET["from"])
     b = float(request.GET["to"])
-    eps = float(request.GET["epsilon"])
-    (result,intervals) = bisection(f, a, b, eps)
+    (intervals, result) = bisection(f, a, b, (1e-6)*abs(b-a))
     resdict = {
         "f": {x:f(x) for x in np.linspace(-10,10,200)},
         "intervals" : intervals,
         "result" : result,
     }
-    
-    print(resdict)
+    response = HttpResponse(json.dumps(resdict))
+    return response
 
+def newton_response(request, *args, **kwargs):
+    f = request.GET["f"]
+    fl = lambdify(x,f)
+    a = float(request.GET["from"])
+    b = float(request.GET["to"])
+    (intervals, result) = newton(f, a, b, (1e-6)*abs(b-a))
+    resdict = {
+        "f": {x:fl(x) for x in np.linspace(-10,10,200)},
+        "intervals" : intervals,
+        "result" : result,
+    }
     response = HttpResponse(json.dumps(resdict))
     return response
