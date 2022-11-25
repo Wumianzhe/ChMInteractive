@@ -90,8 +90,7 @@ def secant_response(request, *args, **kwargs):
     f = lambdify(x,request.GET["f"])
     fstp = float(request.GET["fstp"])
     sstp = float(request.GET["sstp"])
-    eps = float(request.GET["epsilon"])
-    (points, result) = secant(f, fstp, sstp, eps)
+    (points, result) = secant(f, fstp, sstp, 1e-6)
     resdict = {
         "f": {x:f(x) for x in np.linspace(-10,10,200)},
         "points" : points,
@@ -104,7 +103,6 @@ def bisection_response(request, *args, **kwargs):
     f = lambdify(x,request.GET["f"])
     a = float(request.GET["from"])
     b = float(request.GET["to"])
-    #eps = float(request.GET["epsilon"])
     (intervals, result) = bisection(f, a, b, (1e-6)*abs(b-a))
     resdict = {
         "f": {x:f(x) for x in np.linspace(-10,10,200)},
@@ -119,8 +117,7 @@ def newton_response(request, *args, **kwargs):
     fl = lambdify(x,f)
     a = float(request.GET["from"])
     b = float(request.GET["to"])
-    eps = float(request.GET["epsilon"])
-    (intervals, result) = newton(f, a, b, eps)
+    (intervals, result) = newton(f, a, b, (1e-6)*abs(b-a))
     resdict = {
         "f": {x:fl(x) for x in np.linspace(-10,10,200)},
         "intervals" : intervals,
