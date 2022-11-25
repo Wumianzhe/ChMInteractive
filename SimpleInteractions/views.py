@@ -18,26 +18,30 @@ def bisection(f, a, b, eps):
         else:
             a = c
         result = (a + b) / 2
-    
     return (result,intervals)
 
 #secant method		
-def secant(f, x_0, x_1, eps, a, b):
-    fst_der = diff(f)
-    snd_der = diff(fst_der)
-    interval = Interval(a,b)
-    m_1 = minimum(fst_der, x, interval)
-    M_2 = maximum(snd_der,x, interval)
+def secant(f, x_0, x_1, eps):
+    #fst_der = diff(f)
+    #snd_der = diff(fst_der)
+    #interval = Interval(a,b)
+    #m_1 = minimum(fst_der, x, interval)
+    #M_2 = maximum(snd_der,x, interval)
+    points = []
+    points.append((x_0,f(x_0)))
+    points.append((x_1,f(x_1)))
     prev = x_0
     cur = x_1
     next = prev
     prev = cur
     cur = cur + (cur - next) / (f(next) / f(cur) - 1)
-    while (M_2 / (2 * m_1) * abs(next - cur) * abs(cur - prev) > eps):
+    points.append((cur, f(cur)))
+    while(abs(next-cur)>abs(eps*next)):
         next = prev
         prev = cur
         cur = cur + (cur - next) / (f(next) / f(cur) - 1)
-    return cur
+        points.append((cur, f(cur)))
+    return (points, cur)
 
 #Integration
 #midpoint rectangles
@@ -69,11 +73,14 @@ def secant_response(request, *args, **kwargs):
     f = lambdify(x,request.GET["f"])
     fstp = float(request.GET["fstp"])
     sstp = float(request.GET["sstp"])
-    a = float(request.GET["from"])
-    b = float(request.GET["to"])
     eps = float(request.GET["epsilon"])
-    result = secant(f, fstp, sstp, eps, a, b)
-    response = HttpResponse(result)
+    (points, result) = secant(f, fstp, sstp, eps)
+    resdict = {
+        "f": {x:f(x) for x in np.linspace(-10,10,200)},
+        "points" : points,
+        "result" : result,
+    }
+    response = HttpResponse(json.dumps(resdict))
     return response
 
 def bisection_response(request, *args, **kwargs):
@@ -88,7 +95,7 @@ def bisection_response(request, *args, **kwargs):
         "result" : result,
     }
     
-    print(resdict)
+    #rint(resdict)
 
     response = HttpResponse(json.dumps(resdict))
     return response
