@@ -1,5 +1,6 @@
 import { Graphics, Rectangle } from "pixi.js"
 import { Scene } from "./scene"
+import { Point } from "../utils/drawables"
 
 export class Grid extends Graphics {
     override parent: Scene;
@@ -15,6 +16,16 @@ export class Grid extends Graphics {
         this.drawSecondary();
         this.drawTertiary()
     }
+    override moveTo(x: number | "left" | "right", y: number | "top" | "bottom") {
+        const coords: Point = this.parent.remap(x, y);
+        super.moveTo(coords.x, coords.y)
+        return this
+    }
+    override lineTo(x: number | "left" | "right", y: number | "top" | "bottom") {
+        const coords: Point = this.parent.remap(x, y);
+        super.lineTo(coords.x, coords.y)
+        return this
+    }
     update() {
         this.clear();
         this.view = this.parent.getView();
@@ -24,8 +35,8 @@ export class Grid extends Graphics {
     }
     drawMains() {
         this.lineStyle(3, 0x000000)
-        this.moveTo(this.view.width / 2, 0).lineTo(this.view.width / 2, this.view.height);
-        this.moveTo(0, this.view.height / 2).lineTo(this.view.width, this.view.height / 2);
+        this.moveTo(0, "top").lineTo(0, "bottom");
+        this.moveTo("left", 0).lineTo("right", 0);
     }
     drawSecondary() {
         var shift = 160
@@ -36,7 +47,7 @@ export class Grid extends Graphics {
         }
     }
     drawTertiary() {
-       var shift = 40
+        var shift = 40
         for (let i = 0; i < this.view.width / 40; i++) {
             this.lineStyle(1, 0x000000)
             this.moveTo(this.view.width / 2 + shift * i, 0).lineTo(this.view.width / 2 + shift * i, this.view.height);

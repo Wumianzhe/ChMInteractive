@@ -9,7 +9,7 @@ module.exports = (env, argv) => {
     stats: 'minimal', // Keep console output easy to read.
     entry: {
       main: './graph/test.ts', // Your program entry point
-      graph: ['./js/main_graph.js','./js/utils_graph.js']
+      graph: ['./js/main_graph.js', './js/utils_graph.js']
     },
     // Your build destination
     output: {
@@ -84,7 +84,7 @@ module.exports = (env, argv) => {
       , new HtmlWebpackPlugin({ filename: 'INDEX.html', template: './INDEX.html', chunks: ['graph'] })
       , new HtmlWebpackPlugin({ filename: 'ABOUT.html', template: './ABOUT.html', chunks: ['graph'] })
       , new HtmlWebpackPlugin({ filename: 'GRAPH.html', template: './GRAPH.html', chunks: ['graph'] })
-      , new HtmlWebpackPlugin({ filename: 'THEORY.html', template: './THEORY.html', chunks: ['graph'] })
+      , new HtmlWebpackPlugin({ filename: 'THEORY.html', template: './THEORY.html', chunks: ['graph', 'main'] })
     ]
   });
 }

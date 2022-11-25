@@ -8,14 +8,14 @@ export class Scene extends Container {
 
     private readonly grid: Grid;
     private func: Graph;
-    screen: Rectangle;
+    view: Rectangle;
 
     constructor(viewWidth: number, viewHeight: number) {
         super()
 
         this.sceneHeight = viewHeight;
         this.sceneWidth = viewWidth;
-        this.screen = new Rectangle(-10, 4, 20, 8);
+        this.view = new Rectangle(-10, 4, 20, 8);
 
         this.grid = new Grid(this);
         this.addChild(this.grid);
@@ -29,15 +29,27 @@ export class Scene extends Container {
      * Intended to be used as lambda
      * @param p - point to be transformed
      */
-    remap(p: Point): Point {
-        var P = new Point;
-        P.x = (p.x - this.screen.x) / this.screen.width * this.sceneWidth;
-        P.y = -(p.y - this.screen.y) / this.screen.height * this.sceneHeight;
-        return P;
+    remap(x: number | "left" | "right", y: number | "top" | "bottom") {
+        let _x: number, _y: number;
+        if (x == "left") {
+            _x = 0
+        } else if (x == "right") {
+            _x = this.sceneWidth;
+        } else {
+            _x = (x - this.view.x) / this.view.width * this.sceneWidth;
+        }
+        if (y == "top") {
+            _y = 0
+        } else if (y == "bottom") {
+            _y = this.sceneHeight;
+        } else {
+            _y = -(y - this.view.y) / this.view.height * this.sceneHeight;
+        }
+        return { x: _x, y: _y };
     }
 
     getView(): Rectangle {
-        return new Rectangle(0, 0, this.sceneWidth, this.sceneHeight);
+        return this.view;
     }
 
     resize(width: number, height: number) {

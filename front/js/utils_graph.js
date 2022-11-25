@@ -2,22 +2,21 @@
 
 function serialize(obj) {
     var str = [];
-    for(var p in obj)
-       str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+    for (var p in obj)
+        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
     return str.join("&");
-  }
+}
 
-export const submitAct =async (obj) => {
+export const submitAct = async (obj) => {
     console.log("It's work!")
     let args = serialize(obj);
     const requestOptions = {
         method: 'GET',
         origin: 'CHmI',
         headers: { 'Content-Type': 'application/json' },
-        //body: JSON.stringify(obj)
     };
-    const url = 'http://192.168.0.106:8080/bisection_response/?' + args;
+    const url = 'http://192.168.0.101:8080/bisection_response/?' + args;
     console.log(url);
     const t = fetch(url, requestOptions)
     return t
-  }
+}
