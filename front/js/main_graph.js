@@ -25,11 +25,11 @@ sub_btn.onclick = async (e) => {
   // При нажатии кнопки в форме по умолчанию происходит перезагрузка страницы.
   // Чтобы отключить его, нужно отменить стандартное поведение события
   e.preventDefault()
-  
-  const responce = await submitAct()//Функция отпраки данных на сервер для построения графа(пока пустая)
+  const obj = {func: func_str, from: from, to: to};
+  const responce = await submitAct(obj)//Функция отпраки данных на сервер для построения графа(пока пустая)
   //data = await responce.json();
 
-  console.log(responce.json());
+  //console.log(responce.json());
   console.log(func_str)
   console.log(to)
   console.log(from)
