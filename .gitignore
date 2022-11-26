@@ -13,4 +13,4 @@ data/
 build
 htmlcov
 data/
-ui/
+static/

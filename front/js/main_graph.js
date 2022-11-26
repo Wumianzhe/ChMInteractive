@@ -22,7 +22,7 @@ sub_btn.onclick = async (e) => {
   // Чтобы отключить его, нужно отменить стандартное поведение события
   e.preventDefault()
   const obj = {f: func.value, from: from.value, to: to.value};
-  const response = await submitAct(obj)//Функция отпраки данных на сервер для построения графа(пока пустая)
+  const response = await submitAct(obj)
   const data = await response.json()
 
   console.log(data)

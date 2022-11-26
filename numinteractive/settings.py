@@ -42,16 +42,15 @@ INSTALLED_APPS = [
     'corsheaders',
 ]
 
-CSRF_TRUSTED_ORIGINS = ['http://localhost:1234']
+CSRF_TRUSTED_ORIGINS = ['http://localhost:1234', 'http://localhost:8080']
 CSRF_COOKIE_SECURE = False
 #CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOWED_ORIGINS = ['http://localhost:1234']
-
+CORS_ALLOWED_ORIGINS = ['http://localhost:1234', 'http://localhost:8080']
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_HEADERS = [
     'Access-Control-Allow-Origin',
     'content-type',
 ]
-
 CORS_ALLOW_CREDENTIALS = True
 
 MIDDLEWARE = [
@@ -71,7 +70,7 @@ ROOT_URLCONF = 'numinteractive.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'ui')],
+        'DIRS': [os.path.join(BASE_DIR,'static')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -134,6 +133,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 
 STATIC_URL = '/static/'
 
