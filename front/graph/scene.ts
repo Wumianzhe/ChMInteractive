@@ -52,6 +52,12 @@ export class Scene extends Container {
         return this.view;
     }
 
+    getScale(unit: number) {
+        const scaleX = this.sceneWidth*(unit/this.view.width) // size of one math unit on scene in X direction
+        const scaleY = this.sceneHeight*(unit/this.view.height) // size of one math unit on scene in Y direction
+        return {scaleX,scaleY}
+    }
+
     resize(width: number, height: number) {
         this.sceneWidth = width;
         this.sceneHeight = height;
