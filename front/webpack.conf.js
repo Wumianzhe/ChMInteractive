@@ -86,6 +86,8 @@ module.exports = (env, argv) => {
       , new HtmlWebpackPlugin({ filename: 'GRAPH.html', template: './GRAPH.html', chunks: ['graph', 'main'] })
       , new HtmlWebpackPlugin({ filename: 'THEORY/BISECTION.html', template: './THEORY/BISECTION.html', chunks: [] })
       , new HtmlWebpackPlugin({ filename: 'THEORY/INTRO.html', template: './THEORY/INTRO.html', chunks: [] })
+      , new HtmlWebpackPlugin({ filename: 'THEORY/SECANT.html', template: './THEORY/SECANT.html', chunks: [] })
+      , new HtmlWebpackPlugin({ filename: 'THEORY/NEWTON.html', template: './THEORY/NEWTON.html', chunks: [] })
     ]
   });
 }
