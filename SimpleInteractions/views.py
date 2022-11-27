@@ -60,7 +60,22 @@ def home(request):
 
 def graph(request):
     return render(request,"GRAPH.html")
+
 def theory(request):
-    return render(request,"THEORY.html")
+    return render(request,"THEORY/INTRO.html")
+
+def bisect_theory(request):
+    return render(request,"THEORY/BISECTION.html")
+
+def secant_theory(request):
+    return render(request,"THEORY/SECANT.html")
+
+def theory_introduction(request):
+    return render(request, "THEORY/INTRO.html")
+
+
+def newton_theory(request):
+    return render(request,"THEORY/NEWTON.html")
+
 def about(request):
     return render(request,"ABOUT.html")
