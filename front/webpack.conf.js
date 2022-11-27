@@ -13,7 +13,7 @@ module.exports = (env, argv) => {
     },
     // Your build destination
     output: {
-      path: path.resolve(__dirname, '../ui'),
+      path: path.resolve(__dirname, '../static'),
       filename: '[name].bundle.js'
     },
 
@@ -69,10 +69,6 @@ module.exports = (env, argv) => {
     },
 
     plugins: [
-      // Still needed for st ub to work?
-      new CopyPlugin({
-        patterns: [{ from: 'static/' }],
-      }),
       // Make an index.html from the template
       new HtmlWebpackPlugin({
         filename: 'test.html',

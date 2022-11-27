@@ -15,7 +15,7 @@ export class Scene extends Container {
 
         this.sceneHeight = viewHeight;
         this.sceneWidth = viewWidth;
-        this.view = new Rectangle(-10, 4, 20, 8);
+        this.view = new Rectangle(-10, 5.5, 20, 11);
 
         this.grid = new Grid(this);
         this.addChild(this.grid);
@@ -50,6 +50,12 @@ export class Scene extends Container {
 
     getView(): Rectangle {
         return this.view;
+    }
+
+    getScale(unit: number) {
+        const scaleX = this.sceneWidth*(unit/this.view.width) // size of one math unit on scene in X direction
+        const scaleY = this.sceneHeight*(unit/this.view.height) // size of one math unit on scene in Y direction
+        return {scaleX,scaleY}
     }
 
     resize(width: number, height: number) {

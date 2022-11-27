@@ -15,7 +15,7 @@ export const submitAct = async (obj) => {
         origin: 'CHmI',
         headers: { 'Content-Type': 'application/json' },
     };
-    const url = 'http://192.168.0.101:8080/bisection_response/?' + args;
+    const url = 'http://localhost:8080/bisection_response/?' + args;
     console.log(url);
     const t = fetch(url, requestOptions)
     return t

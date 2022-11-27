@@ -10,7 +10,6 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from SimpleInteractions.models import Method
 from .models import Method
-
 import numpy as np
 #bisection method
 
@@ -25,6 +24,7 @@ def secant_response(request, *args, **kwargs):
         "points" : points,
         "result" : result,
     }
+    
     response = HttpResponse(json.dumps(resdict))
     return response
 
