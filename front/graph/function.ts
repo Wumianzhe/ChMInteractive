@@ -15,11 +15,6 @@ export class Graph extends Graphics {
     }
     async loadArray(url: string) {
         fetch(url).then(response => response.json()).then(json => {
-            // stub
-            // no idea why `i` ends up string and not a number
-            //for (var i in range(0, 101)) {
-            //    this.values.push(new Point(json["args"][i], json["values"][i]));
-            //}
             console.log(json);
         })
     }

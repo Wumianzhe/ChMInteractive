@@ -1,4 +1,4 @@
-import { Graphics, Rectangle } from "pixi.js"
+import { Graphics, Rectangle, Text } from "pixi.js"
 import { Scene } from "./scene"
 import { Point } from "../utils/drawables"
 export class Grid extends Graphics {
@@ -13,7 +13,7 @@ export class Grid extends Graphics {
         this.view = parent.getView();
         // placeholders to stop TS complaining
         this.unit=1;
-        this.calcScale();
+        this.calcScale(); 
 
         // draw lines
         this.drawMains();
@@ -88,8 +88,19 @@ export class Grid extends Graphics {
         this.lineStyle(1,0x000000)
         let low = this.unit*Math.ceil(this.view.x /this.unit);
         let high = this.unit*Math.floor((this.view.x+this.view.width)/this.unit);
+        let text = new Text('R');
+        const coords: Point = this.parent.remap(0, 0);
+        text.position.set(coords.x,coords.y)
+        this.addChild(text);
+        
+        
         for (let i = low; i <= high; i+=this.unit) {
             this.moveTo(i,"top").lineTo(i,"bottom");
+        }
+        high = this.unit*Math.ceil(this.view.y /this.unit);
+        low = this.unit*Math.floor((this.view.y-this.view.height)/this.unit);
+        for (let i = low; i <= high; i+=this.unit) {
+            this.moveTo("left",i).lineTo("right",i);
         }
     }
     drawTertiary() {

@@ -15,7 +15,7 @@ export class Scene extends Container {
 
         this.sceneHeight = viewHeight;
         this.sceneWidth = viewWidth;
-        this.view = new Rectangle(-10, 4, 20, 8);
+        this.view = new Rectangle(-10, 5.5, 20, 11);
 
         this.grid = new Grid(this);
         this.addChild(this.grid);
