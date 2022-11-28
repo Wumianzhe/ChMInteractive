@@ -6,8 +6,7 @@ export class Scene extends Container {
     private sceneWidth: number;
     private sceneHeight: number;
 
-    private readonly grid: Grid;
-    private func: Graph;
+    public readonly grid: Grid;
     view: Rectangle;
 
     constructor(viewWidth: number, viewHeight: number) {
@@ -19,9 +18,6 @@ export class Scene extends Container {
 
         this.grid = new Grid(this);
         this.addChild(this.grid);
-
-        this.func = new Graph(this, "func_array.json");
-        this.addChild(this.func);
     }
 
     /**
@@ -36,14 +32,14 @@ export class Scene extends Container {
         } else if (x == "right") {
             _x = this.sceneWidth;
         } else {
-            _x = (x - this.view.x) / this.view.width * this.sceneWidth;
+            _x = Math.min(Math.max(0, (x - this.view.x) / this.view.width * this.sceneWidth), this.sceneWidth);
         }
         if (y == "top") {
             _y = 0
         } else if (y == "bottom") {
             _y = this.sceneHeight;
         } else {
-            _y = -(y - this.view.y) / this.view.height * this.sceneHeight;
+            _y = Math.min(Math.max(0, -(y - this.view.y) / this.view.height * this.sceneHeight), this.sceneHeight);
         }
         return { x: _x, y: _y };
     }
@@ -53,15 +49,35 @@ export class Scene extends Container {
     }
 
     getScale(unit: number) {
-        const scaleX = this.sceneWidth*(unit/this.view.width) // size of one math unit on scene in X direction
-        const scaleY = this.sceneHeight*(unit/this.view.height) // size of one math unit on scene in Y direction
-        return {scaleX,scaleY}
+        const scaleX = this.sceneWidth * (unit / this.view.width) // size of one math unit on scene in X direction
+        const scaleY = this.sceneHeight * (unit / this.view.height) // size of one math unit on scene in Y direction
+        return { scaleX, scaleY }
     }
 
     resize(width: number, height: number) {
         this.sceneWidth = width;
         this.sceneHeight = height;
         this.grid.update();
-        //this.func.update();
+        this.children.forEach((obj) => {
+            (obj as Graph).draw(0);
+        })
+    }
+    clearDrawables() {
+        // I assume that addChild pushes back and child[0] will always be grid object
+        // assumption seems to be true
+        console.log("clear")
+        while (this.children[1]) {
+            this.removeChildAt(1);
+        }
+    }
+    async paintLoop(_?: number) {
+        await new Promise(r => setTimeout(r, 1000));
+        this.children.forEach((obj) => {
+            (obj as Graph).clear();
+            (obj as Graph).draw(0);
+        })
+        // actual paint loop is WIP
+        await new Promise(r => setTimeout(r, 5000));
+        this.clearDrawables()
     }
 }

@@ -1,30 +1,51 @@
-import { Graphics, Point } from "pixi.js"
+import { Graphics } from "pixi.js"
 import { Scene } from "./scene"
+import { Function, Method } from "../utils/types"
 
 
 export class Graph extends Graphics {
     override parent: Scene;
-    private values: Array<Point>;
+    // @ts-expect-error used only in draw, which is empty by default
+    private f?: Function
+    // @ts-expect-error used only in draw, which is empty by default
+    private m?: Method
+    private iter: number = 0;
+    public draw: (_: number) => void = (_: number) => {
+        console.log(this)
+    };
 
-    constructor(parent: Scene, url: string) {
+    override moveTo(x: number | "left" | "right", y: number | "top" | "bottom") {
+        const coords = this.parent.remap(x, y);
+        super.moveTo(coords.x, coords.y)
+        return this
+    }
+    override lineTo(x: number | "left" | "right", y: number | "top" | "bottom") {
+        const coords = this.parent.remap(x, y);
+        super.lineTo(coords.x, coords.y)
+        return this
+    }
+
+    constructor(parent: Scene, obj: Function | Method) {
         super()
 
+        // type guard
+        function isFunction(obj: Function | Method): obj is Function {
+            return (obj as Function).values !== undefined
+        }
+
+        if (isFunction(obj)) {
+            this.f = obj;
+        } else {
+            this.m = obj
+        }
+
         this.parent = parent;
-        this.values = new Array<Point>;
-        this.loadArray(url)//.then(() => this.update());
-    }
-    async loadArray(url: string) {
-        fetch(url).then(response => response.json()).then(json => {
-            console.log(json);
-        })
     }
     update() {
         this.clear();
-        this.lineStyle(1, 0x000000)
-        this.moveTo(this.values[0].x, this.values[0].y);
-        this.values.forEach((p) => {
-            var P = this.parent.remap(p.x, p.y);
-            this.lineTo(P.x, P.y);
-        })
+        this.draw(this.iter);
+    }
+    setDrawFunction(func: any) {
+        this.draw = func;
     }
 }

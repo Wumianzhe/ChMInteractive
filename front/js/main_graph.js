@@ -1,4 +1,5 @@
-import {submitAct} from "./utils_graph.js"
+import { submitAct } from "./utils_graph.js"
+import { setMethod } from "../graph/test"
 
 // Выписываем все айдишники HTMl-элементов в константы для переиспользования
 const func_id = 'func'
@@ -21,12 +22,8 @@ sub_btn.onclick = async (e) => {
   // При нажатии кнопки в форме по умолчанию происходит перезагрузка страницы.
   // Чтобы отключить его, нужно отменить стандартное поведение события
   e.preventDefault()
-  const obj = {f: func.value, from: from.value, to: to.value};
+  const obj = { f: func.value, from: from.value, to: to.value };
   const response = await submitAct(obj)
   const data = await response.json()
-
-  console.log(data)
-  console.log(func.value)
-  console.log(to.value)
-  console.log(from.value)
+  setMethod(data, "bisect")
 }
