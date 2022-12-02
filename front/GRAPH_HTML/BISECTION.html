@@ -28,9 +28,10 @@
             
           </header>
 
-            <div class="row" style="height: 100%;">
+          <div class="container-fluid">
+            <div class="row" style="height: 800px;">
 
-                <div class="col-sm-3 mr-2">
+                <div class="flex-column" style="max-width: 20%;">
                     <!--form action="#" method="post" enctype="multipart/form-data"-->
 
                        <div class="form-group">
@@ -51,25 +52,52 @@
                        <br/>
 
                        <button type="submit" class="btn btn-primary" id = "sub_btn">Plot</button>
+                       <br/>
+
+                       <div class="form-group" style="margin-top: 20px;">
+                        <label id="text_id" style="visibility: hidden;">
+                          
+                        </label>
+                       </div>
 
                     <!--/form-->
                 </div>
                 <script type="module" src="graph.bundle.js"></script>
                 <script type="module" src="main.bundle.js"></script>
 
-                <div style="width:75%">
+                <div class="flex-column" style="min-width: 600px; width: 60%; padding: 50px;">
                   <div class="col-lg" id="pixi-content" style="border: 1px solid #000000; border-radius: 5px; height:100%; max-height:800px">
                   <canvas id="pixi-canvas"/>
                   </div>
                 </div>
                 
-            </div><!-- end row 1-->
-            <br/>
+                
+  
+                <div class="d-flex flex-column-reverse flex-shrink-0 p-3 order-md-last" style="width: 15%; max-width: 200px; border-radius: 5px;">
+                  <ul class="nav nav-pills flex-column mb-auto">
+                    <li>
+                      <a href="bisection" class="nav-link active" aria-current="page">
+                        Бисекция
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="secant" class="nav-link text-white" aria-current="page">
+                        Секущие
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="Newton" class="nav-link text-white" aria-current="page">
+                        Ньютона
+                      </a>
+                    </li>
+                  </ul>
+                </div><!--end slidebar-->
 
-            <div class="row">
-              <p>Функционал: \( \int\limits_a^b(\sin^2{(x)} + \cos^2{y(x)} - (y'(x)^3))dx \rightarrow \inf \)</p>
-            </div>
+                <!-- end row 1-->
            
-          </div> <!-- container clouse div-->
+            </div> 
+          </div>
+      </div>
+        <!-- container clouse div-->
     </body>
 </html>
