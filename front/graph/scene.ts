@@ -5,6 +5,8 @@ import { Graph } from "./function"
 export class Scene extends Container {
     private sceneWidth: number;
     private sceneHeight: number;
+    private stepTimer?: NodeJS.Timer = undefined;
+    private step: number = 0;
 
     public readonly grid: Grid;
     view: Rectangle;
@@ -57,23 +59,60 @@ export class Scene extends Container {
     resize(width: number, height: number) {
         this.sceneWidth = width;
         this.sceneHeight = height;
+        this.updateStatic();
         this.update();
     }
+
+    updateStatic() {
+        this.grid.clear();
+        this.grid.update();
+
+        function isFunctionGraph(obj: any): obj is Graph {
+            return (obj as Graph).f !== undefined
+        }
+        this.children.forEach((obj) => {
+            if (isFunctionGraph(obj)) {
+                obj.clear();
+                obj.update(0);
+            }
+        })
+    }
     clearDrawables() {
+        // is a de facto method cleanup
+        clearInterval(this.stepTimer)
+        this.stepTimer = undefined;
+        this.step = 0;
+
         // I assume that addChild pushes back and child[0] will always be grid object
         // assumption seems to be true
         console.log("clear")
         while (this.children[1]) {
             this.removeChildAt(1);
         }
+        this.updateStatic()
     }
     update(_?: number) {
         console.log("update")
+        function isMethodGraph(obj: any): obj is Graph {
+            return (obj as Graph).m !== undefined
+        }
         this.children.forEach((obj) => {
-            if (obj != this.grid) {
+            if (isMethodGraph(obj)) {
                 (obj as Graph).clear();
-                (obj as Graph).update(0);
+                (obj as Graph).update(this.step);
             }
         })
+    }
+    setStep(delay: number, maxIter: number) {
+        // checks null for me and keeps old if not null
+        this.stepTimer ??= setInterval(() => { this.advanceIter(maxIter) }, delay)
+    }
+    private advanceIter(maxIter: number) {
+        this.step++;
+        if (this.step == maxIter) {
+            this.step = 0;
+            clearInterval(this.stepTimer)
+            this.stepTimer = undefined;
+        }
     }
 }

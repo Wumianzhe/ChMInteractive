@@ -10,7 +10,6 @@ export function drawFunction(this: any, _?: number) {
     f.values.forEach((p) => {
         this.lineTo(p.x, p.y)
     })
-    this.moveTo(0, 0).lineTo(1, 1)
 }
 
 // just draw statically for now, will think about animating it later

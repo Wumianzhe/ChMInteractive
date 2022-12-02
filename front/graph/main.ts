@@ -1,4 +1,4 @@
-import { Renderer } from 'pixi.js'
+import { Renderer, Ticker, UPDATE_PRIORITY } from 'pixi.js'
 import { unwrapBisect } from '../utils/unwrap'
 import { Scene } from './scene'
 import { Graph } from './function'
@@ -12,35 +12,40 @@ const renderer = new Renderer({
     width: parent.offsetWidth,
     height: parent.offsetHeight
 })
+renderer.clearBeforeRender = false
 
 const scene = new Scene(parent.offsetWidth, parent.offsetHeight)
+scene.updateStatic();
 
-var resize = () => {
+const resize = () => {
     // app.view.style.width = `${parent.clientWidth}`;
     // app.view.style.height = `${parent.clientHeight}`;
     scene.resize(parent.clientWidth, parent.clientHeight);
     renderer.resize(parent.clientWidth, parent.clientHeight);
 }
 window.addEventListener("resize", resize);
-new Promise(r => setTimeout(r, 30000)).then(() => {
-    scene.clearDrawables();
-})
 
 // main loop (paint, events)
-requestAnimationFrame(loop);
+const ticker = new Ticker();
+// ticker.maxFPS = 60;
+ticker.add(loop, UPDATE_PRIORITY.LOW)
+ticker.start()
+
 function loop() {
     scene.update();
     renderer.render(scene);
-    requestAnimationFrame(loop)
 }
 
 export function setMethod(data: any, method: string) {
     switch (method) {
         case 'bisect':
+            scene.clearDrawables()
             var gf: Graph, gb: Graph;
             [gf, gb] = unwrapBisect(scene, data)
-            console.log(gf, gb)
             scene.addChild(gf);
+            scene.addChild(gb);
+            scene.updateStatic();
+            scene.setStep(300, data.intervals.length)
             break;
         default:
             console.log("Incorrect input")

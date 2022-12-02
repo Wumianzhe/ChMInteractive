@@ -5,13 +5,11 @@ import { Function, Method } from "../utils/types"
 
 export class Graph extends Graphics {
     override parent: Scene;
-    // @ts-expect-error used only in draw, which is empty by default
-    private f?: Function
-    // @ts-expect-error used only in draw, which is empty by default
-    private m?: Method
-    // @ts-expect-error used only in draw, which is empty by default
+    f?: Function
+    m?: Method
+    // @ts-expect-error used only in update, which is empty by default
     private iter: number = 0;
-    public update: (_: number) => void = (_: number) => {
+    public update: (_: number) => void = (_?: number) => {
     };
 
     override moveTo(x: number | "left" | "right", y: number | "top" | "bottom") {
