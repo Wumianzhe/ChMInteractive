@@ -34,7 +34,7 @@ def bisection_response(request, *args, **kwargs):
     b = float(request.GET["to"])
     (intervals, result) = bisection(f, a, b, (1e-6)*abs(b-a))
     resdict = {
-        "f": {x:f(x) for x in np.linspace(-10,10,200)},
+        "f": [{"x":x,"y":f(x)} for x in np.linspace(-10,10,200)],
         "intervals" : intervals,
         "result" : result,
     }

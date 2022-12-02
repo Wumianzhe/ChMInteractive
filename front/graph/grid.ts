@@ -69,16 +69,17 @@ export class Grid extends Graphics {
 
         console.log(this.unit);
     }
-    update() {
-        this.clear();
+    resize() {
         this.view = this.parent.getView();
         this.calcScale();
-        this.drawMains();
-        this.drawSecondary();
-        this.drawTertiary();
+        this.update();
     }
-    draw(_: number) {
+    update(_?: number) {
         this.clear();
+        // clear children
+        while (this.children[0]) {
+            this.removeChildAt(0);
+        }
         this.drawMains();
         this.drawSecondary();
         this.drawTertiary();

@@ -1,5 +1,5 @@
 import { submitAct } from "./utils_graph.js"
-import { setMethod } from "../graph/test"
+import { setMethod } from "../graph/main"
 
 // Выписываем все айдишники HTMl-элементов в константы для переиспользования
 const func_id = 'func'

@@ -9,9 +9,9 @@ export class Graph extends Graphics {
     private f?: Function
     // @ts-expect-error used only in draw, which is empty by default
     private m?: Method
+    // @ts-expect-error used only in draw, which is empty by default
     private iter: number = 0;
-    public draw: (_: number) => void = (_: number) => {
-        console.log(this)
+    public update: (_: number) => void = (_: number) => {
     };
 
     override moveTo(x: number | "left" | "right", y: number | "top" | "bottom") {
@@ -41,11 +41,7 @@ export class Graph extends Graphics {
 
         this.parent = parent;
     }
-    update() {
-        this.clear();
-        this.draw(this.iter);
-    }
-    setDrawFunction(func: any) {
-        this.draw = func;
+    setDrawFunction(func: (this: any, index: number) => void) {
+        this.update = func;
     }
 }

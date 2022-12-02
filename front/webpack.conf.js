@@ -7,7 +7,7 @@ module.exports = (env, argv) => {
   return ({
     stats: 'minimal', // Keep console output easy to read.
     entry: {
-      main: './graph/test.ts', // Your program entry point
+      main: './graph/main.ts', // Your program entry point
       graph: ['./js/main_graph.js', './js/utils_graph.js']
     },
     // Your build destination

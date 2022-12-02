@@ -5,7 +5,7 @@ from sympy import lambdify
 def bisection(f, a, b, eps):
     intervals = []
     while(abs(b - a)> 2 * eps):
-        intervals.append((a,b))
+        intervals.append({"a":a,"b":b})
         c = (a + b) / 2
         if (f(a) * f(c) < 0):
             b = c

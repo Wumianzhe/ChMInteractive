@@ -57,10 +57,7 @@ export class Scene extends Container {
     resize(width: number, height: number) {
         this.sceneWidth = width;
         this.sceneHeight = height;
-        this.grid.update();
-        this.children.forEach((obj) => {
-            (obj as Graph).draw(0);
-        })
+        this.update();
     }
     clearDrawables() {
         // I assume that addChild pushes back and child[0] will always be grid object
@@ -70,14 +67,13 @@ export class Scene extends Container {
             this.removeChildAt(1);
         }
     }
-    async paintLoop(_?: number) {
-        await new Promise(r => setTimeout(r, 1000));
+    update(_?: number) {
+        console.log("update")
         this.children.forEach((obj) => {
-            (obj as Graph).clear();
-            (obj as Graph).draw(0);
+            if (obj != this.grid) {
+                (obj as Graph).clear();
+                (obj as Graph).update(0);
+            }
         })
-        // actual paint loop is WIP
-        await new Promise(r => setTimeout(r, 5000));
-        this.clearDrawables()
     }
 }
