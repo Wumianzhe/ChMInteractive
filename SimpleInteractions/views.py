@@ -73,7 +73,7 @@ def theory(request):
 def bisect_theory(request):
     test_bisect_decription = Method.objects.get(name = "bisection")
     description = test_bisect_decription.description
-    return render(request,"THEORY/BISECTION.html", {'description': description})
+    return render(request,"THEORY/BISECTION.html")
 
 def secant_theory(request):
     return render(request,"THEORY/SECANT.html")
