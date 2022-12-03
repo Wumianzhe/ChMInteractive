@@ -34,7 +34,7 @@ sub_btn.onclick = async (e) => {
       break;
     case "Ньютона":
       method = 'newton'
-      obj = { f: func.value, from: from.value, to: to.value };
+      obj = { f: func.value, to: to.value };
       break;
     case "Секущие":
       method = 'secant'
@@ -42,8 +42,6 @@ sub_btn.onclick = async (e) => {
       break;
   }
 
-  method = 'secant'
-  obj = { f: func.value, fstp: from.value, sstp: to.value };
   const response = await submitAct(method, obj)
   const data = await response.json()
   res_text.innerHTML = 'Root: ' + data.result
