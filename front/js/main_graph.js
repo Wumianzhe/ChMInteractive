@@ -24,11 +24,25 @@ sub_btn.onclick = async (e) => {
   // При нажатии кнопки в форме по умолчанию происходит перезагрузка страницы.
   // Чтобы отключить его, нужно отменить стандартное поведение события
   e.preventDefault()
+  var method
+
+  switch (document.querySelector(".nav-link.active").text) {
+    case "Бисекция":
+      method = 'bisection'
+      break;
+    case "Ньютона":
+      method = 'newton'
+      break;
+    case "Секущие":
+      method = 'secant'
+      break;
+  }
+
   const obj = { f: func.value, from: from.value, to: to.value };
-  const response = await submitAct(obj)
+  const response = await submitAct(method, obj)
   const data = await response.json()
   res_text.innerHTML = 'Root: ' + data.result
   res_text.style.visibility = 'visible'
-  setMethod(data, "bisect")
- 
+  setMethod(data, method)
+
 }

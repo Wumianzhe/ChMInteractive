@@ -38,7 +38,16 @@ function loop() {
 
 export function setMethod(data: any, method: string) {
     switch (method) {
-        case 'bisect':
+        case 'bisection':
+            scene.clearDrawables()
+            var gf: Graph, gb: Graph;
+            [gf, gb] = unwrapBisect(scene, data)
+            scene.addChild(gf);
+            scene.addChild(gb);
+            scene.updateStatic();
+            scene.setStep(300, data.intervals.length)
+            break;
+        case 'newton':
             scene.clearDrawables()
             var gf: Graph, gb: Graph;
             [gf, gb] = unwrapBisect(scene, data)
