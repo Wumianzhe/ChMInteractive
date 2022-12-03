@@ -16,7 +16,8 @@ export class Scene extends Container {
 
         this.sceneHeight = viewHeight;
         this.sceneWidth = viewWidth;
-        this.view = new Rectangle(-10, 5.5, 20, 11);
+        const ratio = this.sceneHeight / this.sceneWidth;
+        this.view = new Rectangle(-10, 10 * ratio, 20, 20 * ratio);
 
         this.grid = new Grid(this);
         this.addChild(this.grid);
@@ -34,14 +35,14 @@ export class Scene extends Container {
         } else if (x == "right") {
             _x = this.sceneWidth;
         } else {
-            _x = Math.min(Math.max(0, (x - this.view.x) / this.view.width * this.sceneWidth), this.sceneWidth);
+            _x = Math.min(Math.max(-10, (x - this.view.x) / this.view.width * this.sceneWidth), this.sceneWidth + 10);
         }
         if (y == "top") {
             _y = 0
         } else if (y == "bottom") {
             _y = this.sceneHeight;
         } else {
-            _y = Math.min(Math.max(0, -(y - this.view.y) / this.view.height * this.sceneHeight), this.sceneHeight);
+            _y = Math.min(Math.max(-10, -(y - this.view.y) / this.view.height * this.sceneHeight), this.sceneHeight + 10);
         }
         return { x: _x, y: _y };
     }

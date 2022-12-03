@@ -10,7 +10,9 @@ export function unwrapBisect(scene: Scene, data: any) {
     const gb = new Graph(scene, b)
     gf.setDrawFunction(drawFunction)
     gb.setDrawFunction(drawBisectStep)
-    return [gf, gb]
+    scene.addChild(gf);
+    scene.addChild(gb);
+    scene.updateStatic();
 }
 
 export function unwrapSecant(scene: Scene, data: any) {
@@ -20,5 +22,7 @@ export function unwrapSecant(scene: Scene, data: any) {
     const gs = new Graph(scene, s)
     gf.setDrawFunction(drawFunction)
     gs.setDrawFunction(drawSecantStep)
-    return [gf, gs]
+    scene.addChild(gf);
+    scene.addChild(gs);
+    scene.updateStatic();
 }

@@ -1,7 +1,6 @@
 import { Renderer, Ticker, UPDATE_PRIORITY } from 'pixi.js'
 import { unwrapBisect, unwrapSecant } from '../utils/unwrap'
 import { Scene } from './scene'
-import { Graph } from './function'
 
 const parent = document.getElementById("pixi-content") as HTMLDivElement;
 const container = document.getElementById("pixi-canvas") as HTMLCanvasElement;
@@ -10,7 +9,8 @@ const renderer = new Renderer({
     view: container,
     backgroundColor: 0xffffff,
     width: parent.offsetWidth,
-    height: parent.offsetHeight
+    height: parent.offsetHeight,
+    antialias: true
 })
 renderer.clearBeforeRender = false
 
@@ -40,20 +40,12 @@ export function setMethod(data: any, method: string) {
     switch (method) {
         case 'bisection':
             scene.clearDrawables()
-            var funcGraph: Graph, secantGraph: Graph;
-            [funcGraph, secantGraph] = unwrapBisect(scene, data)
-            scene.addChild(funcGraph);
-            scene.addChild(secantGraph);
-            scene.updateStatic();
+            unwrapBisect(scene, data)
             scene.setStep(300, data.intervals.length)
             break;
         case 'secant':
             scene.clearDrawables()
-            var funcGraph: Graph, secantGraph: Graph;
-            [funcGraph, secantGraph] = unwrapSecant(scene, data)
-            scene.addChild(funcGraph);
-            scene.addChild(secantGraph);
-            scene.updateStatic();
+            unwrapSecant(scene, data)
             scene.setStep(300, data.points.length - 2)
             break;
         default:

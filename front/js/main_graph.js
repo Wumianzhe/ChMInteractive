@@ -41,6 +41,8 @@ sub_btn.onclick = async (e) => {
       obj = { f: func.value, fstp: from.value, sstp: to.value };
       break;
   }
+  method = 'bisection'
+  obj = { f: func.value, from: from.value, to: to.value };
 
   const response = await submitAct(method, obj)
   const data = await response.json()
