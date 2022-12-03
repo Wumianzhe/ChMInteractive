@@ -25,20 +25,25 @@ sub_btn.onclick = async (e) => {
   // Чтобы отключить его, нужно отменить стандартное поведение события
   e.preventDefault()
   var method
+  var obj
 
   switch (document.querySelector(".nav-link.active").text) {
     case "Бисекция":
       method = 'bisection'
+      obj = { f: func.value, from: from.value, to: to.value };
       break;
     case "Ньютона":
       method = 'newton'
+      obj = { f: func.value, from: from.value, to: to.value };
       break;
     case "Секущие":
       method = 'secant'
+      obj = { f: func.value, fstp: from.value, sstp: to.value };
       break;
   }
 
-  const obj = { f: func.value, from: from.value, to: to.value };
+  method = 'secant'
+  obj = { f: func.value, fstp: from.value, sstp: to.value };
   const response = await submitAct(method, obj)
   const data = await response.json()
   res_text.innerHTML = 'Root: ' + data.result

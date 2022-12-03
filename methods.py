@@ -29,7 +29,7 @@ def secant(f, x_0, x_1, eps):
         next = prev
         prev = cur
         cur = cur + (cur - next) / (f(next) / f(cur) - 1)
-        points.append((cur, f(cur)))
+        points.append({"x":cur,"fx":f(cur)})
     return (points, cur)
 #Newton method
 def newton(func, a, b, e):

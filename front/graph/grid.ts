@@ -95,7 +95,7 @@ export class Grid extends Graphics {
         this.lineStyle(1, 0x000000)
         let low = this.unit * Math.ceil(this.view.x / this.unit);
         let high = this.unit * Math.floor((this.view.x + this.view.width) / this.unit);
-        let text = new Text('R');
+        let text = new Text('O');
         const coords = this.parent.remap(0, 0);
         text.position.set(coords.x, coords.y)
         this.addChild(text);

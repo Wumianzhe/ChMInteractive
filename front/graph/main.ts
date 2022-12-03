@@ -1,5 +1,5 @@
 import { Renderer, Ticker, UPDATE_PRIORITY } from 'pixi.js'
-import { unwrapBisect } from '../utils/unwrap'
+import { unwrapBisect, unwrapSecant } from '../utils/unwrap'
 import { Scene } from './scene'
 import { Graph } from './function'
 
@@ -40,21 +40,21 @@ export function setMethod(data: any, method: string) {
     switch (method) {
         case 'bisection':
             scene.clearDrawables()
-            var gf: Graph, gb: Graph;
-            [gf, gb] = unwrapBisect(scene, data)
-            scene.addChild(gf);
-            scene.addChild(gb);
+            var funcGraph: Graph, secantGraph: Graph;
+            [funcGraph, secantGraph] = unwrapBisect(scene, data)
+            scene.addChild(funcGraph);
+            scene.addChild(secantGraph);
             scene.updateStatic();
             scene.setStep(300, data.intervals.length)
             break;
-        case 'newton':
+        case 'secant':
             scene.clearDrawables()
-            var gf: Graph, gb: Graph;
-            [gf, gb] = unwrapBisect(scene, data)
-            scene.addChild(gf);
-            scene.addChild(gb);
+            var funcGraph: Graph, secantGraph: Graph;
+            [funcGraph, secantGraph] = unwrapSecant(scene, data)
+            scene.addChild(funcGraph);
+            scene.addChild(secantGraph);
             scene.updateStatic();
-            scene.setStep(300, data.intervals.length)
+            scene.setStep(300, data.points.length - 2)
             break;
         default:
             console.log("Incorrect input")

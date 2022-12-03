@@ -20,7 +20,7 @@ def secant_response(request, *args, **kwargs):
     sstp = float(request.GET["sstp"])
     (points, result) = secant(f, fstp, sstp, 1e-6)
     resdict = {
-        "f": {x:f(x) for x in np.linspace(-10,10,200)},
+        "f": [{"x":x,"y":f(x)} for x in np.linspace(-10,10,200)],
         "points" : points,
         "result" : result,
     }

@@ -31,6 +31,8 @@ export function drawNewtonStep(this: any, index: number) {
 }
 
 export function drawSecantStep(this: any, index: number) {
+    this.clear();
+    this.lineStyle(2, 0xff0000)
     const m = this.m as Secant
     this.moveTo(m.iters[index].x, m.iters[index].fx);
     this.lineTo(m.iters[index + 2].x, 0)
