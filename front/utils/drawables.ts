@@ -4,7 +4,7 @@ import { Function, Bisect, Newton, Secant } from "./types"
 export function drawFunction(this: any, _?: number) {
     console.log("function")
     this.clear();
-    this.lineStyle(2, 0x00ff00)
+    this.lineStyle(2, 0x239b56 )
     const f = this.f as Function
     this.moveTo(f.values[0].x, f.values[0].y);
     f.values.forEach((p) => {
@@ -16,7 +16,7 @@ export function drawFunction(this: any, _?: number) {
 // assumes existence of "m" member, which represents drawn method
 export function drawBisectStep(this: any, index: number) {
     this.clear();
-    this.lineStyle(2, 0xff0000)
+    this.lineStyle(2, 0xc0392b )
     const m = this.m as Bisect
     this.moveTo(m.iters[index].a, "top").lineTo(m.iters[index].a, "bottom");
     this.moveTo(m.iters[index].b, "top").lineTo(m.iters[index].b, "bottom");
@@ -32,7 +32,7 @@ export function drawNewtonStep(this: any, index: number) {
 
 export function drawSecantStep(this: any, index: number) {
     this.clear();
-    this.lineStyle(2, 0xff0000)
+    this.lineStyle(2, 0xc0392b)
     const m = this.m as Secant
     this.moveTo(m.iters[index].x, m.iters[index].fx);
     this.lineTo(m.iters[index + 2].x, 0)
