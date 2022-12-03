@@ -76,11 +76,11 @@ module.exports = (env, argv) => {
         hash: true,
         minify: false
       })
-      , new HtmlWebpackPlugin({ filename: 'INDEX.html', template: './INDEX.html', chunks: ['graph'] })
-      , new HtmlWebpackPlugin({ filename: 'ABOUT.html', template: './ABOUT.html', chunks: ['graph'] })
-      , new HtmlWebpackPlugin({ filename: 'GRAPH_HTML/BISECTION.html', template: './GRAPH_HTML/BISECTION.html', chunks: ['graph', 'main'] })
-      , new HtmlWebpackPlugin({ filename: 'GRAPH_HTML/SECANT.html', template: './GRAPH_HTML/SECANT.html', chunks: ['graph', 'main'] })
-      , new HtmlWebpackPlugin({ filename: 'GRAPH_HTML/NEWTON.html', template: './GRAPH_HTML/NEWTON.html', chunks: ['graph', 'main'] })
+      , new HtmlWebpackPlugin({ filename: 'INDEX.html', template: './INDEX.html', chunks: [] })
+      , new HtmlWebpackPlugin({ filename: 'ABOUT.html', template: './ABOUT.html', chunks: [] })
+      , new HtmlWebpackPlugin({ filename: 'GRAPH_HTML/BISECTION.html', template: './GRAPH_HTML/BISECTION.html', chunks: [] })
+      , new HtmlWebpackPlugin({ filename: 'GRAPH_HTML/SECANT.html', template: './GRAPH_HTML/SECANT.html', chunks: [] })
+      , new HtmlWebpackPlugin({ filename: 'GRAPH_HTML/NEWTON.html', template: './GRAPH_HTML/NEWTON.html', chunks: [] })
       , new HtmlWebpackPlugin({ filename: 'THEORY/BISECTION.html', template: './THEORY/BISECTION.html', chunks: [] })
       , new HtmlWebpackPlugin({ filename: 'THEORY/INTRO.html', template: './THEORY/INTRO.html', chunks: [] })
       , new HtmlWebpackPlugin({ filename: 'THEORY/SECANT.html', template: './THEORY/SECANT.html', chunks: [] })
