@@ -1,0 +1,78 @@
+% Created 2022-11-11 Fri 20:55
+% Intended LaTeX compiler: pdflatex
+\documentclass{scrartcl}
+  \renewcommand\sectionformat{\llap{\thesection\autodot\enskip}}
+  \renewcommand\subsectionformat{\llap{\thesubsection\autodot\enskip}}
+  \renewcommand\subsubsectionformat{\llap{\thesubsubsection\autodot\enskip}}
+  
+\usepackage[utf8]{inputenc}
+\usepackage[T1,T2A]{fontenc}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage[american]{babel}
+% features: (embed-files custom-font microtype acronym par-sep alegreya-typeface)
+
+  \usepackage[main,include]{embedall}
+  \IfFileExists{./\jobname.org}{\embedfile[desc=The original file]{\jobname.org}}{}
+  
+\usepackage{AlegreyaSans}
+\usepackage[scale=0.88]{sourcecodepro}
+
+\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=2000]{microtype}
+
+\newcommand{\acr}[1]{\protect\textls*[110]{\scshape #1}}
+\newcommand{\acrs}{\protect\scalebox{.91}[.84]{\hspace{0.15ex}s}}
+\setlength{\parskip}{\baselineskip}
+\setlength{\parindent}{0pt}
+
+% end features
+\date{\today}
+\title{Notes}
+
+  \providecolor{url}{HTML}{0077bb}
+  \providecolor{link}{HTML}{882255}
+  \providecolor{cite}{HTML}{999933}
+  \hypersetup{
+    pdfauthor={},
+    pdftitle={Notes},
+    pdfkeywords={},
+    pdfsubject={},
+    pdfcreator={Emacs 28.2 (Org mode 9.6)},
+    pdflang={English},
+    breaklinks=true,
+    colorlinks=true,
+    linkcolor=link,
+    urlcolor=url,
+    citecolor=cite
+}
+  \urlstyle{same}
+  \begin{document}
+
+\maketitle
+\tableofcontents \clearpage
+\section{Introduction}
+\label{sec:org78b2e43}
+Personal notes on my part of project. That includes logic, \acr{api}, and notes on \texttt{Pixi JS} I'm going to be using
+\section{Pixi}
+\label{sec:org43ba986}
+\subsection{Display tree}
+\label{sec:orgb1e3814}
+It all begins with \verb~Stage~. Which is created by \verb~Application~, but I'm going to be redefining that. Then tree of
+\verb~Container~, with leaves being \verb~Sprite~. For performance it's possible to use \verb~Particle Container~ but it has
+restrictions on sprites (must come from same texture), can't use filters and masks. None of these are restricting
+graphics it seems.
+\subsubsection{Graphics}
+\label{sec:org410be69}
+Inherits from \verb~Container~ (a pity).
+
+Most of my work will be done here.
+
+!! Don't try to \texttt{clear()} and then redraw \texttt{Graphics} every frame. You should ideally draw them once and transform
+   resulting object
+
+\subsubsection{Context}
+\label{sec:org43a0b63}
+If a method is passed as parameter, when parameter is called, \texttt{this} is the object calling the function, not object for
+which the method was written. To fix, \texttt{.bind(this)}.
+\end{document}

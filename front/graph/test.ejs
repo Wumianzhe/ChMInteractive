@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Pixi Test</title>
+	<style>
+	 html,
+	 body {
+		 margin: 0;
+		 padding: 0;
+		 height: 100%;
+		 overflow: hidden;
+	 }
+	 #parent {
+		 height: 100%;
+		 display: flex;
+		 flex-direction: row;
+		 flex-wrap: nowrap;
+		 justify-content: space-around
+	 }
+	 #child {
+		 flex-grow: 1;
+		 flex-shrink: 1;
+	 }
+	 #pixi-content {
+		 background: #ffffff;
+		 height: 100%;
+		 flex-grow: 4;
+		 flex-shrink: 4;
+		 min-width: 0;
+	 }
+	</style>
+
+</head>
+<body>
+	<noscript>Please enable JavaScript in your web browser to view this page.</noscript>
+	<div id="parent">
+		<div id="child">
+			<p></p>
+		</div>
+		<div id="pixi-content">
+			<canvas id="pixi-canvas"/>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+# Help
+Help() {
+    # display help
+    echo "Simple script to run very limited set of commands on local server"
+    echo
+    echo "Syntax: runner subcommand [command]"
+    echo "Possible subcommands are"
+    echo "setup     build docker image and go through the motions"
+    echo "migrate   short for django migration"
+    echo "run       run following arguments inside docker"
+    echo "up        launch images"
+    echo "down      stop images"
+}
+
+if [[ "$#" -eq 0 ]]; then
+    echo "subcommand required"
+    Help
+fi
+
+case $1 in
+    "setup")
+        sudo docker-compose build
+        sudo docker-compose up -d
+        sudo docker-compose run web python manage.py migrate
+        sudo docker-compose down
+        ;;
+    "migrate")
+        sudo docker-compose run web python manage.py migrate
+        ;;
+    "run")
+        sudo docker-compose run web "${@:2}"
+        ;;
+    "help")
+        Help
+        ;;
+    "args")
+        echo "${@:2}"
+        ;;
+    "up")
+        sudo docker-compose up $2
+        ;;
+    "down")
+        sudo docker-compose down
+        ;;
+    *)
+        echo "unknown command"
+        Help
+        ;;
+esac
