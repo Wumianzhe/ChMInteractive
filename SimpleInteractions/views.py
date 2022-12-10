@@ -8,9 +8,11 @@ from sympy import lambdify
 from sympy import *
 from sympy.abc import x
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from SimpleInteractions.models import Method
+from SimpleInteractions.models import UserLogin
 from .models import Method
 import numpy as np
 #bisection method
@@ -57,6 +59,7 @@ def newton_response(request, *args, **kwargs):
     response = HttpResponse(json.dumps(resdict))
     return response
 
+@login_required
 def home(request):
     return render(request,"INDEX.html")
 
@@ -70,32 +73,27 @@ def graph_newton(request):
     return render(request,"GRAPH_HTML/NEWTON.html")
 
 def theory(request):
+    
+
     return render(request,"THEORY/INTRO.html")
 
 def bisect_theory(request):
+    test_add = UserLogin.objects.create(name='test')
     test_bisect_decription = Method.objects.get(name = "bisection")
     description = test_bisect_decription.description
-    return render(request,"THEORY/BISECTION.html")
+    return render(request,"THEORY/BISECTION.html", {'description':description})
 
 def secant_theory(request):
     return render(request,"THEORY/SECANT.html")
 
 def theory_introduction(request):
     return render(request, "THEORY/INTRO.html")
-
 def signup(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('INDEXxx.html')
-    else:
-        form = UserCreationForm()
-    return render(request, 'INDEX.html')
+        email = request.POST.get('email', False)
+        password = request.Post.get('email', False)
+
+
 def newton_theory(request):
     return render(request,"THEORY/NEWTON.html")
 
