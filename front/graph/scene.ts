@@ -93,7 +93,7 @@ export class Scene extends Container {
         this.updateStatic()
     }
     update(_?: number) {
-        console.log("update")
+        //console.log("update")
         function isMethodGraph(obj: any): obj is Graph {
             return (obj as Graph).m !== undefined
         }
