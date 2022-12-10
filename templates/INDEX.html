@@ -41,12 +41,24 @@
                       <form class="" action="signup" method="post">
                         {% csrf_token %}
                         <div class="form-floating mb-3">
-                          <input type="email" class="form-control rounded-3" id="floatingInput" placeholder="name@example.com" name = "email">
+                          <input type="email" class="form-control rounded-3" id="EmailInput" placeholder="name@example.com" name = "email">
                           <label for="floatingInput">Email address</label>
                         </div>
                         <div class="form-floating mb-3">
-                          <input type="password" class="form-control rounded-3" id="floatingPassword" placeholder="Password" name = "password">
+                          <input type="text" class="form-control rounded-3" id="FirstNameInput" placeholder="name@example.com" name = "first_name">
+                          <label for="floatingInput">First name</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                          <input type="email" class="form-control rounded-3" id="SecondNameInput" placeholder="name@example.com" name = "second_name">
+                          <label for="floatingInput">Second name</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                          <input type="password" class="form-control rounded-3" id="PasswordInput" placeholder="Password" name = "password">
                           <label for="floatingPassword">Password</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                          <input type="password" class="form-control rounded-3" id="PasswordInput" placeholder="Password" name = "password">
+                          <label for="floatingPassword">Confirm password</label>
                         </div>
                         <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Sign up</button>
                       </form>

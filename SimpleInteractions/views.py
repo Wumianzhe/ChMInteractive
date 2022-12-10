@@ -59,7 +59,7 @@ def newton_response(request, *args, **kwargs):
     response = HttpResponse(json.dumps(resdict))
     return response
 
-@login_required
+
 def home(request):
     return render(request,"INDEX.html")
 
