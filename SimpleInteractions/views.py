@@ -59,7 +59,7 @@ def newton_response(request, *args, **kwargs):
     response = HttpResponse(json.dumps(resdict))
     return response
 
-
+@login_required
 def home(request):
     return render(request,"INDEX.html")
 
@@ -73,12 +73,9 @@ def graph_newton(request):
     return render(request,"GRAPH_HTML/NEWTON.html")
 
 def theory(request):
-    
-
     return render(request,"THEORY/INTRO.html")
 
 def bisect_theory(request):
-    test_add = UserLogin.objects.create(name='test')
     test_bisect_decription = Method.objects.get(name = "bisection")
     description = test_bisect_decription.description
     return render(request,"THEORY/BISECTION.html", {'description':description})
@@ -90,9 +87,14 @@ def theory_introduction(request):
     return render(request, "THEORY/INTRO.html")
 def signup(request):
     if request.method == 'POST':
-        email = request.POST.get('email', False)
-        password = request.Post.get('email', False)
-
+        f_n = request.POST['first_name']
+        l_n = request.POST['last_name']
+        eml = request.POST['email']
+        passwd = request.POST['password']
+        new_user = UserLogin(first_name = f_n, last_name = l_n, email = eml, password = passwd)
+        new_user.save()
+        return redirect('home')
+        
 
 def newton_theory(request):
     return render(request,"THEORY/NEWTON.html")
