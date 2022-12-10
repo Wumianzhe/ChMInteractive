@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
 
     path('home', views.home, name='home'),
+    path ('signup',views.signup, name='signup'),
     path('graph/bisection', views.graph_bisection, name='graph_biseciton'),
     path('graph/secant', views.graph_secant, name='graph_secant'),
     path('graph/newton', views.graph_newton, name='graph_newton'),

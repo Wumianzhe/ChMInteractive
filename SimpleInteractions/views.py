@@ -1,5 +1,6 @@
 #import imp
 import json
+from django.contrib.auth import login, authenticate
 from methods import bisection
 from methods import secant
 from methods import newton
@@ -7,7 +8,8 @@ from sympy import lambdify
 from sympy import *
 from sympy.abc import x
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm
 from SimpleInteractions.models import Method
 from .models import Method
 import numpy as np
@@ -81,7 +83,19 @@ def secant_theory(request):
 def theory_introduction(request):
     return render(request, "THEORY/INTRO.html")
 
-
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('INDEXxx.html')
+    else:
+        form = UserCreationForm()
+    return render(request, 'INDEX.html')
 def newton_theory(request):
     return render(request,"THEORY/NEWTON.html")
 
