@@ -7,7 +7,7 @@ from sympy import lambdify
 from sympy import *
 from sympy.abc import x
 from django.http import HttpResponse
-from django.contrib.auth import authenticate,logout
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 #from django.contrib.auth.hashers import make_password, check_password
 from django.shortcuts import render, redirect
@@ -103,6 +103,7 @@ def user_signup(request):
         eml = request.POST['email']
         passwd = request.POST['password']
         user = User.objects.create_user(username = f_n, first_name = f_n, last_name = l_n, email = eml, password=passwd)
+        user.save()
         #encrypted_passwd = make_password(request.POST['password'])
         #check_passwd = check_password(request.POST['password'], encrypted_passwd)
         #new_user = UserLogin(first_name = f_n, last_name = l_n, email = eml, password = encrypted_passwd, is_authenticated = True)
@@ -112,9 +113,9 @@ def user_signup(request):
 
 def user_login(request):
     if request.method == 'POST':
-        username = request.POST[username]
-        password = request.POST[password]
-        user = authenticate(request, username = username, password = password)
+        usrn = request.POST['username']
+        passwd = request.POST['password']
+        user = authenticate(request, username = usrn, password = passwd)
         if user is not None:
             login(request, user)
     return redirect('home')

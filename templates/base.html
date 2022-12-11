@@ -24,7 +24,12 @@
             <div class="text-end col-md-3">
               <!-- Buttons trigger modal -->
               {% if user.is_authenticated  %}
-                <button type="button" action = "user_logout" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signUpModal"> Logout </button>
+                <form class="d-flex flex-row-reverse md-3" action = "user_logout">
+                  <div class="flex-column" style="padding-left: 30px;">
+                    <button type="submit" class="btn btn-primary"> Logout </button>
+                  </div>
+                  <div class="p-1"> Hello, {{user.username}}!</div>
+                </form>
               {% else %}
                 <button type="button" class="btn btn-outline-light me-2 text-dark" data-bs-toggle="modal" data-bs-target="#LoginModal"> Login </button>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signUpModal"> Sign up </button>
@@ -51,17 +56,14 @@
                           <label for="floatingInput">First name</label>
                         </div>
                         <div class="form-floating mb-3">
-                          <input type="text" class="form-control rounded-3" id="LastNameInput" placeholder="Last name" name = "second_name">
+                          <input type="text" class="form-control rounded-3" id="LastNameInput" placeholder="Last name" name = "last_name">
                           <label for="floatingInput">Last name</label>
                         </div>
                         <div class="form-floating mb-3">
                           <input type="password" class="form-control rounded-3" id="PasswordInput" placeholder="Password" name = "password">
                           <label for="floatingPassword">Password</label>
                         </div>
-                        <div class="form-floating mb-3">
-                          <input type="password" class="form-control rounded-3" id="ConfirmPasswordInput" placeholder="Password" name = "confirm_password">
-                          <label for="floatingPassword">Confirm password</label>
-                        </div>
+                       
                         <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Sign up</button>
                       </form>
                     </div>
@@ -81,9 +83,9 @@
               
                     <div class="modal-body p-5 pt-0">
                       <form class="" action="user_login" method="post">
-                        {% csrf_token %}
+                          {% csrf_token %}
                         <div class="form-floating mb-3">
-                          <input type="email" class="form-control rounded-3" id="EmailInput" placeholder="name@example.com" name = "email">
+                          <input type="text" class="form-control rounded-3" id="UsernameInput" placeholder="name@example.com" name = "username">
                           <label for="floatingInput">Email address</label>
                         </div>
                         <div class="form-floating mb-3">
