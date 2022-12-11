@@ -1,6 +1,5 @@
 #import imp
 import json
-from django.contrib.auth import login, authenticate
 from methods import bisection
 from methods import secant
 from methods import newton
@@ -8,11 +7,12 @@ from sympy import lambdify
 from sympy import *
 from sympy.abc import x
 from django.http import HttpResponse
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate,logout
+from django.contrib.auth.models import User
+#from django.contrib.auth.hashers import make_password, check_password
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
 from SimpleInteractions.models import Method
-from SimpleInteractions.models import UserLogin
+#from SimpleInteractions.models import UserLogin
 from .models import Method
 import numpy as np
 #bisection method
@@ -60,10 +60,11 @@ def newton_response(request, *args, **kwargs):
     return response
 
 def home(request):
-    return render(request,"INDEX.html")
+    user = request.user 
+    return render(request,"home.html", {'user':user})
 
 def home_template(request):
-    return render(request,"home.html")
+    return render(request,"qwe")
 
 def graph(request):
     return render(request,"graph.html")
@@ -88,19 +89,36 @@ def secant_theory(request):
 
 def theory_introduction(request):
     return render(request, "THEORY/INTRO.html")
-def signup(request):
-    if request.method == 'POST':
-        f_n = request.POST['first_name']
-        l_n = request.POST['last_name']
-        eml = request.POST['email']
-        passwd = request.POST['password']
-        new_user = UserLogin(first_name = f_n, last_name = l_n, email = eml, password = passwd)
-        new_user.save()
-        return redirect('home')
-        
 
 def newton_theory(request):
     return render(request,"THEORY/NEWTON.html")
 
 def about(request):
     return render(request,"ABOUT.html")
+
+def user_signup(request):
+    if request.method == 'POST':
+        f_n = request.POST['first_name']
+        l_n = request.POST['last_name']
+        eml = request.POST['email']
+        passwd = request.POST['password']
+        user = User.objects.create_user(username = f_n, first_name = f_n, last_name = l_n, email = eml, password=passwd)
+        #encrypted_passwd = make_password(request.POST['password'])
+        #check_passwd = check_password(request.POST['password'], encrypted_passwd)
+        #new_user = UserLogin(first_name = f_n, last_name = l_n, email = eml, password = encrypted_passwd, is_authenticated = True)
+        #new_user.save()
+        return redirect("home")
+    return redirect("home")  
+
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST[username]
+        password = request.POST[password]
+        user = authenticate(request, username = username, password = password)
+        if user is not None:
+            login(request, user)
+    return redirect('home')
+
+def user_logout(request):
+    logout(request)
+    return redirect('home')

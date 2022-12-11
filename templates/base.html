@@ -23,8 +23,8 @@
 
             <div class="text-end col-md-3">
               <!-- Buttons trigger modal -->
-              {% if is_auth  %}
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signUpModal"> Logout </button>
+              {% if user.is_authenticated  %}
+                <button type="button" action = "user_logout" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signUpModal"> Logout </button>
               {% else %}
                 <button type="button" class="btn btn-outline-light me-2 text-dark" data-bs-toggle="modal" data-bs-target="#LoginModal"> Login </button>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signUpModal"> Sign up </button>
@@ -40,7 +40,7 @@
                     </div>
               
                     <div class="modal-body p-5 pt-0">
-                      <form class="" action="signup" method="post">
+                      <form class="" action="user_signup" method="post">
                         {% csrf_token %}
                         <div class="form-floating mb-3">
                           <input type="email" class="form-control rounded-3" id="EmailInput" placeholder="name@example.com" name = "email">
@@ -80,7 +80,7 @@
                     </div>
               
                     <div class="modal-body p-5 pt-0">
-                      <form class="" action="login" method="post">
+                      <form class="" action="user_login" method="post">
                         {% csrf_token %}
                         <div class="form-floating mb-3">
                           <input type="email" class="form-control rounded-3" id="EmailInput" placeholder="name@example.com" name = "email">

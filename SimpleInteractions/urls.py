@@ -4,7 +4,9 @@ from . import views
 urlpatterns = [
 
     path('home', views.home, name='home'),
-    path ('signup',views.signup, name='signup'),
+    path ('user_signup', views.user_signup, name='user_signup'),
+    path('user_login', views.user_login, name = 'user_login'),
+    path('user_logout', views.user_logout, name = 'user_logout'),
     path('graph/bisection', views.graph_bisection, name='graph_biseciton'),
     path('graph', views.graph, name='graph'),
     path('graph/secant', views.graph_secant, name='graph_secant'),
@@ -18,5 +20,5 @@ urlpatterns = [
     path('secant_response/', views.secant_response, name='secant_response'),
     path('bisection_response/', views.bisection_response, name='bisection_response'),
     path('newton_response/', views.newton_response, name='newton_response'),
-    path('home_template', views.home_template, name='home_template')
+    #path('home_template', views.home_template, name='home_template')
 ]
