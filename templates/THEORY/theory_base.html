@@ -1,5 +1,9 @@
 {% extends '../base.html' %}
-
+{% block head_script %} 
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+{% endblock %}
 {% block container %} <div class="container" style="padding-left: 0.1rem; padding-right: 0.1rem; min-width: 800px; max-width: 80%;"> {% endblock %}
 
 {% block content %}

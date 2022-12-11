@@ -65,6 +65,9 @@ def home(request):
 def home_template(request):
     return render(request,"home.html")
 
+def graph(request):
+    return render(request,"graph.html")
+
 def graph_bisection(request):
     return render(request,"GRAPH_HTML/BISECTION.html")
 
