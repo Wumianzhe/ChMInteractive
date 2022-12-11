@@ -1,0 +1,39 @@
+{% extends '../base.html' %}
+
+{% block container %} <div class="container" style="padding-left: 0.1rem; padding-right: 0.1rem; min-width: 800px; max-width: 80%;"> {% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+    <div clas="row flex-xl-nowrap" style="display: flex; flex-direction: row;">
+
+      <div class="d-flex flex-column flex-shrink-0 p-3 " style="width: 200px; border-radius: 5px; height: min-content; background-color: lightgray;">
+        <ul class="nav nav-pills flex-column mb-auto">
+          <li class="nav-item">
+            <a href="intro" class="nav-link text-dark" aria-current="page">
+              Введение
+            </a>
+          </li>
+          <li>
+            <a href="bisection" class="nav-link text-dark" aria-current="page">
+              Бисекция
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="secant" class="nav-link text-dark" aria-current="page">
+              Секущие
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="Newton" class="nav-link text-dark" aria-current="page">
+              Ньютона
+            </a>
+          </li>
+        </ul>
+      </div><!--end slidebar-->
+
+      {% block content_theory %}
+      {% endblock %}
+
+{% endblock %}
+

@@ -17,4 +17,5 @@ urlpatterns = [
     path('secant_response/', views.secant_response, name='secant_response'),
     path('bisection_response/', views.bisection_response, name='bisection_response'),
     path('newton_response/', views.newton_response, name='newton_response'),
+    path('home_template', views.home_template, name='home_template')
 ]

@@ -43,10 +43,10 @@
                         <input type="text" class="form-control" id="func" placeholder="f(x)" name="func">
                        </div> 
                        <br/>
-
                        <div class="form-group">
                        <div class="row">
-                        <label>Limits:</label>
+                        <label class="Bisection">Limits:</label>
+                        <label class="Secant">Points</label>
                         <div class="col-sm-5"><input type="number" class="form-control" id="from" placeholder="from" name="from"></div>
                         <div class="col-sm-5"><input type="number" class="form-control" id="to" placeholder="to" name="to"></div>
                        </div>
@@ -77,20 +77,23 @@
   
                 <div class="d-flex flex-column-reverse flex-shrink-0 p-3 order-md-last" style="width: 15%; max-width: 200px; border-radius: 5px; height: min-content; background-color: lightgray;">
                   <ul class="nav nav-pills flex-column mb-auto">
-                    <li>
-                      <a href="bisection" class="nav-link active" aria-current="page">
+                    <li class="nav-item">
+                      <button class="nav-link active text-dark " aria-current="page">Бисекция</button>
+                      <!-- <a href="bisection" class="nav-link active" aria-current="page">
                         Бисекция
-                      </a>
+                      </a> -->
                     </li>
                     <li class="nav-item">
-                      <a href="secant" class="nav-link text-dark" aria-current="page">
+                      <button class="nav-link text-dark " aria-current="page">Секущие</button>
+                      <!-- <a href="secant" class="nav-link text-dark" aria-current="page">
                         Секущие
-                      </a>
+                      </a> -->
                     </li>
                     <li class="nav-item">
-                      <a href="newton" class="nav-link text-dark" aria-current="page">
+                      <button class="nav-link text-dark " aria-current="page">Ньютона</button>
+                      <!-- <a href="newton" class="nav-link text-dark" aria-current="page">
                         Ньютона
-                      </a>
+                      </a> -->
                     </li>
                   </ul>
                 </div><!--end slidebar-->

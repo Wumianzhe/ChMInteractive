@@ -62,6 +62,9 @@ def newton_response(request, *args, **kwargs):
 def home(request):
     return render(request,"INDEX.html")
 
+def home_template(request):
+    return render(request,"home.html")
+
 def graph_bisection(request):
     return render(request,"GRAPH_HTML/BISECTION.html")
 
@@ -75,9 +78,7 @@ def theory(request):
     return render(request,"THEORY/INTRO.html")
 
 def bisect_theory(request):
-    test_bisect_decription = Method.objects.get(name = "bisection")
-    description = test_bisect_decription.description
-    return render(request,"THEORY/BISECTION.html", {'description':description})
+    return render(request,"THEORY/BISECTION.html")
 
 def secant_theory(request):
     return render(request,"THEORY/SECANT.html")

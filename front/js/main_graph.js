@@ -18,7 +18,18 @@ const to = document.getElementById(to_id)
 
 const res_text = document.getElementById(res_text_id)
 
-const sub_btn = document.getElementById(sub_btn_id);
+const sub_btn = document.getElementById(sub_btn_id)
+
+const sec_btn = document.getElementById("sec_btn")
+sec_btn.addEventListener("click",(event) => {
+  e.preventDefault()
+  document.querySelectorAll(".Bisection,.Newton").forEach((element) => {
+    element.style.visibility = hidden
+  })
+  document.querySelectorAll(".Secant").forEach((element) => {
+    element.style.visibility = visible
+  })
+})
 
 sub_btn.onclick = async (e) => {
   // При нажатии кнопки в форме по умолчанию происходит перезагрузка страницы.
