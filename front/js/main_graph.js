@@ -8,6 +8,22 @@ const to_id = 'to'
 const sub_btn_id = 'sub_btn'
 const res_text_id = 'text_id'
 
+const bisect_btn_id = 'btn_bes'
+
+const methodClassArray = ['.Bisection','.Secant','.Newton']
+
+function select(methodName) {
+  active = methodName
+
+  document.querySelectorAll(methodClassArray.join(", ")).forEach((node) => {
+    node.visibility = "hidden"
+  })
+  document.querySelectorAll('.' + methodName).forEach((node) => {
+    node.visibility = "visible"
+  })
+}
+var active = "Bisection"
+
 // Получаем элемент DOM-дерева по id и присваиваем значение аттрибуту oninput
 // oninput вызывается с параметром "event" каждый раз, когда ввод меняется
 const func = document.getElementById(func_id)
@@ -20,16 +36,10 @@ const res_text = document.getElementById(res_text_id)
 
 const sub_btn = document.getElementById(sub_btn_id)
 
-const sec_btn = document.getElementById("sec_btn")
-sec_btn.addEventListener("click",(event) => {
-  e.preventDefault()
-  document.querySelectorAll(".Bisection,.Newton").forEach((element) => {
-    element.style.visibility = hidden
-  })
-  document.querySelectorAll(".Secant").forEach((element) => {
-    element.style.visibility = visible
-  })
-})
+const bisect_btn = document.getElementById(bisect_btn_id)
+bisect_btn.onclick = (e) => {
+  select("Bisection")
+}
 
 sub_btn.onclick = async (e) => {
   // При нажатии кнопки в форме по умолчанию происходит перезагрузка страницы.
@@ -38,8 +48,8 @@ sub_btn.onclick = async (e) => {
   var method
   var obj
 
-  switch (document.querySelector(".nav-link.active").text) {
-    case "Бисекция":
+  switch (active) {
+    case "Bisection":
       method = 'bisection'
       obj = { f: func.value, from: from.value, to: to.value };
       break;
@@ -52,8 +62,6 @@ sub_btn.onclick = async (e) => {
       obj = { f: func.value, fstp: from.value, sstp: to.value };
       break;
   }
-  method = 'bisection'
-  obj = { f: func.value, from: from.value, to: to.value };
 
   const response = await submitAct(method, obj)
   const data = await response.json()

@@ -1,9 +1,8 @@
 {% extends './theory_base.html' %}
-  
+
+{% block header %} <h1>Метод Ньютона</h1> {% endblock %}
+
 {% block content_theory %}
-    <main class="coll-12 bd-content" style=" margin-left: 20px;">
-      <h1>Введение</h1>
-      <hr>
       <p>
         Пусть в уравнении \( f(x) = 0 \) функция имеет непрерывную производную \( f'(x) \neq 0\, x_n\) есть некоторое приближение к корню \(\overline{x}\) рассматриваемого уравнения. В окрестности точки \(x_n\) разложим функцию \( f(x)\) в ряд Тейлора.
         <div align="center">

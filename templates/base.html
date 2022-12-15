@@ -48,19 +48,19 @@
                       <form class="" action="user_signup" method="post">
                         {% csrf_token %}
                         <div class="form-floating mb-3">
-                          <input type="email" class="form-control rounded-3" id="EmailInput" placeholder="name@example.com" name = "email">
+                          <input type="email" class="form-control rounded-3" id="EmailInput" name = "email" required>
                           <label for="floatingInput">Email address</label>
                         </div>
                         <div class="form-floating mb-3">
-                          <input type="text" class="form-control rounded-3" id="FirstNameInput" placeholder="Name" name = "first_name">
+                          <input type="text" class="form-control rounded-3" id="FirstNameInput" name = "first_name" required>
                           <label for="floatingInput">First name</label>
                         </div>
                         <div class="form-floating mb-3">
-                          <input type="text" class="form-control rounded-3" id="LastNameInput" placeholder="Last name" name = "last_name">
+                          <input type="text" class="form-control rounded-3" id="LastNameInput" name = "last_name" required>
                           <label for="floatingInput">Last name</label>
                         </div>
                         <div class="form-floating mb-3">
-                          <input type="password" class="form-control rounded-3" id="PasswordInput" placeholder="Password" name = "password">
+                          <input type="password" class="form-control rounded-3" id="PasswordInput" name = "password" required>
                           <label for="floatingPassword">Password</label>
                         </div>
                        
@@ -85,11 +85,11 @@
                       <form class="" action="user_login" method="post">
                           {% csrf_token %}
                         <div class="form-floating mb-3">
-                          <input type="text" class="form-control rounded-3" id="UsernameInput" placeholder="name@example.com" name = "username">
+                          <input type="text" class="form-control rounded-3" id="UsernameInput" name = "username" required>
                           <label for="floatingInput">Email address</label>
                         </div>
                         <div class="form-floating mb-3">
-                          <input type="password" class="form-control rounded-3" id="PasswordInput" placeholder="Password" name = "password">
+                          <input type="password" class="form-control rounded-3" id="PasswordInput" name = "password" required>
                           <label for="floatingPassword">Password</label>
                         </div>
                         <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Login</button>
