@@ -8,8 +8,6 @@ const to_id = 'to'
 const sub_btn_id = 'sub_btn'
 const res_text_id = 'text_id'
 
-// Получаем элемент DOM-дерева по id и присваиваем значение аттрибуту oninput
-// oninput вызывается с параметром "event" каждый раз, когда ввод меняется
 const func = document.getElementById(func_id)
 
 const from = document.getElementById(from_id)
@@ -24,9 +22,9 @@ sub_btn.onclick = async (e) => {
   // При нажатии кнопки в форме по умолчанию происходит перезагрузка страницы.
   // Чтобы отключить его, нужно отменить стандартное поведение события
   e.preventDefault()
+
   var method
   var obj
-
   switch (document.querySelector(".nav-link.active").text) {
     case "Бисекция":
       method = 'bisection'
@@ -41,6 +39,7 @@ sub_btn.onclick = async (e) => {
       obj = { f: func.value, fstp: from.value, sstp: to.value };
       break;
   }
+
   method = 'bisection'
   obj = { f: func.value, from: from.value, to: to.value };
 
