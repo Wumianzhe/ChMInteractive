@@ -39,10 +39,15 @@ const sub_btn = document.getElementById(sub_btn_id)
 const bisect_btn = document.getElementById(bisect_btn_id)
 bisect_btn.onclick = (e) => {
   select("Bisection")
+  from.placeholder = "a"
+  to.placeholder = "b"
+  
 }
 const secant_btn = document.getElementById("btn_sec")
 secant_btn.onclick = (e) => {
   select("Secant")
+  from.placeholder = "x1"
+  to.placeholder = "x2"
 }
 
 sub_btn.onclick = async (e) => {
@@ -61,7 +66,7 @@ sub_btn.onclick = async (e) => {
       method = 'newton'
       obj = { f: func.value, to: to.value };
       break;
-    case "Секущие":
+    case "Secant":
       method = 'secant'
       obj = { f: func.value, fstp: from.value, sstp: to.value };
       break;

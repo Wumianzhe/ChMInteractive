@@ -24,7 +24,7 @@
             <div class="text-end col-md-3">
               <!-- Buttons trigger modal -->
               {% if user.is_authenticated  %}
-                <form class="d-flex flex-row-reverse md-3" action = "user_logout">
+                <form class="d-flex flex-row-reverse md-3" action = "/user_logout">
                   <div class="flex-column" style="padding-left: 30px;">
                     <button type="submit" class="btn btn-primary"> Logout </button>
                   </div>
@@ -45,7 +45,7 @@
                     </div>
               
                     <div class="modal-body p-5 pt-0">
-                      <form class="" action="user_signup" method="post">
+                      <form class="" action="/user_signup" method="post">
                         {% csrf_token %}
                         <div class="form-floating mb-3">
                           <input type="email" class="form-control rounded-3" id="EmailInput" name = "email" required>
@@ -82,7 +82,7 @@
                     </div>
               
                     <div class="modal-body p-5 pt-0">
-                      <form class="" action="user_login" method="post">
+                      <form class="" action="/user_login" method="post">
                           {% csrf_token %}
                         <div class="form-floating mb-3">
                           <input type="text" class="form-control rounded-3" id="UsernameInput" name = "username" required>
