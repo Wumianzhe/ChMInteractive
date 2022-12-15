@@ -1,15 +1,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        {% load static %}
-        <script type="module" src="{% static 'main.bundle.js' %}"></script>
-        {% load static %}
-        <script type="module" src="{% static 'graph.bundle.js' %}"></script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>InterNM</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-        
+
 
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
         <script id="MathJax-script" async
@@ -21,15 +17,15 @@
         <div class="container" style="height: 800px; padding-left: 0.1rem; padding-right: 0.1rem; max-width: 80%;  min-width: 800px;">
 
           <header class="d-flex flex-wrap align-items-center justify-content-center py-3 mb-4 border-bottom">
-        
+
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
               <li><a href="../home" class="nav-link px-2 link-dark">Home</a></li>
               <li><a href="../graph/bisection" class="nav-link px-2 link-secondary">Graph</a></li>
               <li><a href="../theory/intro" class="nav-link px-2 link-dark">Theory</a></li>
               <!--<li><a href="../about" class="nav-link px-2 link-dark">About</a></li>!-->
             </ul>
-      
-            
+
+
           </header>
 
           <div class="container-fluid">
@@ -37,33 +33,27 @@
 
                 <div class="flex-column" style="max-width: 20%; border-radius: 5px; height: min-content; background-color: lightgray;">
                     <!--form action="#" method="post" enctype="multipart/form-data"-->
-
-                       <div class="form-group" style="padding-top: 20px">
+                    <div class="form-group" style="padding-top: 20px">
                         <label>Function:</label>
                         <input type="text" class="form-control" id="func" placeholder="f(x)" name="func">
-                       </div> 
-                       <br/>
-
-                       <div class="form-group">
-                       <div class="row">
-                        <label>Limits:</label>
-                        <div class="col-sm-5"><input type="number" class="form-control" id="from" placeholder="from" name="from"></div>
-                        <div class="col-sm-5"><input type="number" class="form-control" id="to" placeholder="to" name="to"></div>
-                       </div>
-                       <br/>
-        
-                       </div>
-                       <br/>
-
-                       <button type="submit" class="btn btn-primary" id = "sub_btn">Plot</button>
-                       <br/>
-
-                       <div class="form-group" style="margin-top: 20px; padding-bottom: 20px;">
+                    </div>
+                    <br/>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="Bisection">Limits:</label>
+                            <label class="Secant" style="display:none">Points</label>
+                            <div class="col-sm-5"><input type="number" class="form-control" id="from" placeholder="from" name="from"></div>
+                            <div class="col-sm-5"><input type="number" class="form-control" id="to" placeholder="to" name="to"></div>
+                        </div>
+                        <br/>
+                    </div>
+                    <br/>
+                    <button type="submit" class="btn btn-primary" id = "sub_btn">Plot</button>
+                    <br/>
+                    <div class="form-group" style="margin-top: 20px; padding-bottom: 20px;">
                         <label id="text_id" style="visibility: hidden;">
-                          
                         </label>
-                       </div>
-
+                    </div>
                     <!--/form-->
                 </div>
 
@@ -72,32 +62,26 @@
                   <canvas id="pixi-canvas"/>
                   </div>
                 </div>
-                
-                
-  
-                <div class="d-flex flex-column-reverse flex-shrink-0 p-3 order-md-last" style="width: 15%; max-width: 200px; border-radius: 5px; height: min-content; background-color: lightgray;">
-                  <ul class="nav nav-pills flex-column mb-auto">
-                    <li>
-                      <a href="bisection" class="nav-link active" aria-current="page">
-                        Бисекция
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="secant" class="nav-link text-dark" aria-current="page">
-                        Секущие
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="newton" class="nav-link text-dark" aria-current="page">
-                        Ньютона
-                      </a>
-                    </li>
-                  </ul>
+
+
+
+                <div class="d-flex flex-column-reverse flex-shrink-0 p-3 order-md-last" style="width: 15%; width: min-content; border-radius: 5px; height: min-content; background-color: lightgray;">
+
+                    <div class="btn-group-vertical" role="group" aria-label="Basic radio toggle button group">
+                        <input type="radio" class="btn-check" name="btnradio" id="btn_bes" autocomplete="off" checked>
+                        <label class="btn btn-outline-primary" for="btn_bes"> Бисекция </label>
+
+                        <input type="radio" class="btn-check" name="btnradio" id="btn_sec" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="btn_sec"> Секущие </label>
+
+                        <input type="radio" class="btn-check" name="btnradio" id="btn_new" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="btn_new"> Ньютона </label>
+                    </div>
                 </div><!--end slidebar-->
 
                 <!-- end row 1-->
-           
-            </div> 
+
+            </div>
           </div>
       </div>
         <!-- container clouse div-->

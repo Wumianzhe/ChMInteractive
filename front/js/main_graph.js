@@ -10,16 +10,16 @@ const res_text_id = 'text_id'
 
 const bisect_btn_id = 'btn_bes'
 
-const methodClassArray = ['.Bisection','.Secant','.Newton']
+const methodClassArray = ['.Bisection', '.Secant', '.Newton']
 
 function select(methodName) {
   active = methodName
 
   document.querySelectorAll(methodClassArray.join(", ")).forEach((node) => {
-    node.visibility = "hidden"
+    node.style.display = "none"
   })
   document.querySelectorAll('.' + methodName).forEach((node) => {
-    node.visibility = "visible"
+    node.style.display = "block"
   })
 }
 var active = "Bisection"
@@ -39,6 +39,10 @@ const sub_btn = document.getElementById(sub_btn_id)
 const bisect_btn = document.getElementById(bisect_btn_id)
 bisect_btn.onclick = (e) => {
   select("Bisection")
+}
+const secant_btn = document.getElementById("btn_sec")
+secant_btn.onclick = (e) => {
+  select("Secant")
 }
 
 sub_btn.onclick = async (e) => {

@@ -68,23 +68,7 @@ module.exports = (env, argv) => {
     },
 
     plugins: [
-      // Make an index.html from the template
-      new HtmlWebpackPlugin({
-        filename: 'test.html',
-        template: 'graph/test.ejs',
-        chunks: ['main'],
-        hash: true,
-        minify: false
-      })
-      , new HtmlWebpackPlugin({ filename: 'INDEX.html', template: './INDEX.html', chunks: [] })
-      , new HtmlWebpackPlugin({ filename: 'ABOUT.html', template: './ABOUT.html', chunks: [] })
-      , new HtmlWebpackPlugin({ filename: 'GRAPH_HTML/BISECTION.html', template: './GRAPH_HTML/BISECTION.html', chunks: ["main", "graph"] })
-      , new HtmlWebpackPlugin({ filename: 'GRAPH_HTML/SECANT.html', template: './GRAPH_HTML/SECANT.html', chunks: ["main", "graph"] })
-      , new HtmlWebpackPlugin({ filename: 'GRAPH_HTML/NEWTON.html', template: './GRAPH_HTML/NEWTON.html', chunks: [] })
-      , new HtmlWebpackPlugin({ filename: 'THEORY/BISECTION.html', template: './THEORY/BISECTION.html', chunks: [] })
-      , new HtmlWebpackPlugin({ filename: 'THEORY/INTRO.html', template: './THEORY/INTRO.html', chunks: [] })
-      , new HtmlWebpackPlugin({ filename: 'THEORY/SECANT.html', template: './THEORY/SECANT.html', chunks: [] })
-      , new HtmlWebpackPlugin({ filename: 'THEORY/NEWTON.html', template: './THEORY/NEWTON.html', chunks: [] })
+      new HtmlWebpackPlugin({ filename: 'GRAPH.html', template: './GRAPH.html', chunks: ["graph"] })
     ]
   });
 }
