@@ -81,9 +81,9 @@ export class Grid extends Graphics {
     }
     update(_?: number) {
         this.clear();
-        // clear children
+        // clear children (can't use forEach here)
         while (this.children[0]) {
-            this.removeChildAt(0);
+            this.children[0].destroy();
         }
         this.drawMains();
         this.drawSecondary();
@@ -95,7 +95,7 @@ export class Grid extends Graphics {
         this.moveTo("left", 0).lineTo("right", 0);
     }
 
-    // TODO fix text numbers (minor)
+    // TODO fix numbers font (minor)
     drawSecondary() {
         this.lineStyle(1, 0x000000)
         let low = this.unit * Math.ceil(this.view.x / this.unit);
@@ -133,5 +133,4 @@ export class Grid extends Graphics {
             this.moveTo("left", i).lineTo("right", i);
         }
     }
-
 }

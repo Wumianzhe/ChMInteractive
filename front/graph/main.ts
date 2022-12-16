@@ -18,12 +18,31 @@ const scene = new Scene(parent.offsetWidth, parent.offsetHeight)
 scene.updateStatic();
 
 const resize = () => {
-    // app.view.style.width = `${parent.clientWidth}`;
-    // app.view.style.height = `${parent.clientHeight}`;
     scene.resize(parent.clientWidth, parent.clientHeight);
     renderer.resize(parent.clientWidth, parent.clientHeight);
 }
 window.addEventListener("resize", resize);
+container.addEventListener("wheel", (event: any) => {
+    event.preventDefault()
+
+    const origin = { x: event.layerX - event.target.offsetLeft, y: event.layerY - event.target.offsetTop }
+    const scale = (event.deltaY < 0) ? 0.933 : 1.071; // ~2^-0.1, ~2^0.1
+
+    scene.rescale(origin, scale)
+});
+
+container.addEventListener("mousedown", (event: any) => {
+    console.log("down")
+
+    const origin = { x: event.layerX - event.target.offsetLeft, y: event.layerY - event.target.offsetTop }
+    scene.panToggle(origin);
+});
+container.addEventListener("mouseup", (event: any) => {
+    console.log("up")
+
+    const origin = { x: event.layerX - event.target.offsetLeft, y: event.layerY - event.target.offsetTop }
+    scene.panToggle(origin);
+});
 
 // main loop (paint, events)
 const ticker = new Ticker();
@@ -50,5 +69,6 @@ export function setMethod(data: any, method: string) {
             break;
         default:
             console.log("Incorrect input")
+            return
     }
 }

@@ -1,12 +1,15 @@
 import { Container, Rectangle } from "pixi.js"
 import { Grid } from "./grid"
 import { Graph } from "./function"
+import { Point } from "../utils/types"
 
 export class Scene extends Container {
     private sceneWidth: number;
     private sceneHeight: number;
     private stepTimer?: NodeJS.Timer = undefined;
     private step: number = 0;
+    private panPosition: Point = { x: 0, y: 0 };
+    private panning: boolean = false;
 
     public readonly grid: Grid;
     view: Rectangle;
@@ -16,11 +19,29 @@ export class Scene extends Container {
 
         this.sceneHeight = viewHeight;
         this.sceneWidth = viewWidth;
+        // modify height based on aspect ratio
         const ratio = this.sceneHeight / this.sceneWidth;
         this.view = new Rectangle(-10, 10 * ratio, 20, 20 * ratio);
 
+        this.interactive = true;
+        this.hitArea = new Rectangle(this.sceneHeight, this.sceneWidth);
+
         this.grid = new Grid(this);
         this.addChild(this.grid);
+
+        // events registration
+        this.on("mousemove", (e) => {
+            this.pan({ x: e.data.global.x, y: e.data.global.y })
+        }, this)
+        // pointer up/down don't seem to work, so I'm using HTML events
+        this.on('pointerdown', (e) => {
+            console.log("down")
+            this.panToggle({ x: e.data.global.x, y: e.data.global.y })
+        }, this)
+        this.on('pointerup', (e) => {
+            console.log("up")
+            this.panToggle({ x: e.data.global.x, y: e.data.global.y })
+        }, this)
     }
 
     /**
@@ -60,13 +81,16 @@ export class Scene extends Container {
     resize(width: number, height: number) {
         this.sceneWidth = width;
         this.sceneHeight = height;
+        // modify height based on aspect ratio
+        const ratio = this.sceneHeight / this.sceneWidth;
+        this.view.y = -this.view.x * ratio;
+        this.view.height = this.view.width * ratio;
         this.updateStatic();
         this.update();
     }
 
     updateStatic() {
-        this.grid.clear();
-        this.grid.update();
+        this.grid.resize();
 
         function isFunctionGraph(obj: any): obj is Graph {
             return (obj as Graph).f !== undefined
@@ -88,6 +112,7 @@ export class Scene extends Container {
         // assumption seems to be true
         console.log("clear")
         while (this.children[1]) {
+            this.children[1].destroy();
             this.removeChildAt(1);
         }
         this.updateStatic()
@@ -115,5 +140,37 @@ export class Scene extends Container {
             clearInterval(this.stepTimer)
             this.stepTimer = undefined;
         }
+    }
+    rescale(origin: Point, scale: number) {
+        const mathX = this.view.x + this.view.width * (origin.x / this.sceneWidth)
+        const mathY = this.view.y - this.view.height * (origin.y / this.sceneHeight)
+
+        this.view.x = mathX - scale * (mathX - this.view.x);
+        this.view.y = mathY + scale * (this.view.y - mathY);
+
+        this.view.width *= scale;
+        this.view.height *= scale;
+
+        this.updateStatic()
+        this.update()
+    }
+    panToggle(position: Point) {
+        this.panPosition = position
+        this.panning = !this.panning
+    }
+    pan(to: Point) {
+        if (!this.panning) {
+            return;
+        }
+        const delta = { x: to.x - this.panPosition.x, y: to.y - this.panPosition.y }
+        const deltaX = delta.x / this.sceneWidth * this.view.width // convert from screen to math coords
+        const deltaY = delta.y / this.sceneHeight * this.view.height // convert from screen to math coords
+        this.view.x -= deltaX;
+        this.view.y += deltaY;
+
+        this.panPosition = to;
+
+        this.updateStatic()
+        this.update()
     }
 }
