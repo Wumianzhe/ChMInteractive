@@ -12,7 +12,7 @@ module.exports = (env, argv) => {
     },
     // Your build destination
     output: {
-      path: path.resolve(__dirname, '../static'),
+      path: path.resolve(__dirname, '../static/scripts'),
       filename: '[name].bundle.js'
     },
 
