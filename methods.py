@@ -28,29 +28,24 @@ def secant(f, x_0, x_1, eps):
     while(abs(next-cur)>abs(eps*next)):
         next = prev
         prev = cur
+        if (f(cur) == 0):
+            break
         cur = cur + (cur - next) / (f(next) / f(cur) - 1)
         points.append({"x":cur,"fx":f(cur)})
     return (points, cur)
 #Newton method
-def newton(func, a, b, e):
+def newton(func, x_prev, e):
     intervals = []
     fder = diff(func)
-    sder = diff(fder)
     f = lambdify(x, func)
-    fderl = lambdify(x,sder)
-    sderl = lambdify(x,fder)
-    while (abs(a - b) > 2 * e):
-        intervals.append((a, b))
-        if (f(a) * sderl(a) < 0):
-            a = a - f(a) * (a - b) / (f(a) - f(b))
-        elif (f(a) * sderl(a) > 0):
-            a = a - f(a) / fderl(a)
-        if (f(b) * sderl(b) < 0):
-            b - f(b) * (b - a) / (f(b) - f(a))
-        elif (f(b) * sderl(b) > 0):
-            b = b - f(b) / fderl(b)
-    intervals.append((a, b))
-    result = (a + b) / 2
+    fderl = lambdify(x,fder)
+    x_cur = x_prev - f(x_prev)/fderl(x_prev)
+    while (abs(x_prev - x_cur) >  e):
+        intervals.append((x_prev, f(x_prev)))
+        x_prev = x_cur
+        x_cur = x_prev - f(x_prev)/fderl(x_prev)
+    intervals.append((x_cur, f(x_cur)))
+    result = x_cur
     return (intervals, result)
 
 

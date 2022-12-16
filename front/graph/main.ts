@@ -1,9 +1,11 @@
 import { Rectangle, Renderer, Ticker, UPDATE_PRIORITY } from 'pixi.js'
-import { unwrapBisect, unwrapSecant } from '../utils/unwrap'
+import { unwrapBisect, unwrapNewton, unwrapSecant } from '../utils/unwrap'
 import { Scene } from './scene'
 
 const parent = document.getElementById("pixi-content") as HTMLDivElement;
 const container = document.getElementById("pixi-canvas") as HTMLCanvasElement;
+
+const animTime = 500 //ms
 
 const renderer = new Renderer({
     view: container,
@@ -58,12 +60,17 @@ export function setMethod(data: any, method: string) {
         case 'bisection':
             scene.clearDrawables()
             unwrapBisect(scene, data)
-            scene.setStep(300, data.intervals.length)
+            scene.setStep(animTime, data.intervals.length)
             break;
         case 'secant':
             scene.clearDrawables()
             unwrapSecant(scene, data)
-            scene.setStep(300, data.points.length - 2)
+            scene.setStep(animTime, data.points.length - 2)
+            break;
+        case 'newton':
+            scene.clearDrawables()
+            unwrapNewton(scene, data)
+            scene.setStep(animTime, data.points.length - 1)
             break;
         default:
             console.log("Incorrect input")
@@ -71,6 +78,6 @@ export function setMethod(data: any, method: string) {
     }
 }
 
-export function getBounds() : Rectangle {
+export function getBounds(): Rectangle {
     return scene.view;
 }

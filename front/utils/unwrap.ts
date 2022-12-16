@@ -1,7 +1,7 @@
 import { Function, Bisect, Secant } from "./types"
 import { Scene } from '../graph/scene'
 import { Graph } from '../graph/function'
-import { drawBisectStep, drawFunction, drawSecantStep } from './drawables'
+import { drawBisectStep, drawFunction, drawNewtonStep, drawSecantStep } from './drawables'
 
 export function unwrapBisect(scene: Scene, data: any) {
     const f: Function = { values: data.f }
@@ -18,6 +18,16 @@ export function unwrapSecant(scene: Scene, data: any) {
     const s: Secant = { iters: data.points }
     const gf = new Graph(scene, f, drawFunction)
     const gs = new Graph(scene, s, drawSecantStep)
+    scene.addChild(gf);
+    scene.addChild(gs);
+    scene.updateStatic();
+}
+
+export function unwrapNewton(scene: Scene, data: any) {
+    const f: Function = { values: data.f }
+    const s: Secant = { iters: data.points }
+    const gf = new Graph(scene, f, drawFunction)
+    const gs = new Graph(scene, s, drawNewtonStep)
     scene.addChild(gf);
     scene.addChild(gs);
     scene.updateStatic();

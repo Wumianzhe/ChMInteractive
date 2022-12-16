@@ -41,13 +41,18 @@ bisect_btn.onclick = (e) => {
   select("Bisection")
   from.placeholder = "a"
   to.placeholder = "b"
-  
+
 }
 const secant_btn = document.getElementById("btn_sec")
 secant_btn.onclick = (e) => {
   select("Secant")
   from.placeholder = "x1"
   to.placeholder = "x2"
+}
+const newton_btn = document.getElementById("btn_new")
+newton_btn.onclick = (e) => {
+  select("Newton")
+  from.placeholder = "x0"
 }
 
 sub_btn.onclick = async (e) => {
@@ -63,9 +68,9 @@ sub_btn.onclick = async (e) => {
       method = 'bisection'
       obj = { f: func.value, from: from.value, to: to.value };
       break;
-    case "Ньютона":
+    case "Newton":
       method = 'newton'
-      obj = { f: func.value, to: to.value };
+      obj = { f: func.value, x1: from.value };
       break;
     case "Secant":
       method = 'secant'
@@ -77,7 +82,7 @@ sub_btn.onclick = async (e) => {
   obj.high = bounds.x + bounds.width;
   const response = await submitAct(method, obj)
   const data = await response.json()
-  res_text.innerHTML = 'Root: ' + data.result
+  res_text.innerHTML = 'Root: ' + Number.parseFloat(data.result).toExponential(5)
   res_text.style.visibility = 'visible'
   setMethod(data, method)
 

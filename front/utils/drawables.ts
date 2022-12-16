@@ -23,6 +23,7 @@ export function drawBisectStep(this: any, index: number) {
 
 export function drawNewtonStep(this: any, index: number) {
     const m = this.m as Newton
+    this.lineStyle(2, 0xc0392b)
     this.moveTo(m.iters[index].x, m.iters[index].fx);
     this.lineTo(m.iters[index + 1].x, 0)
     // should be a dashed line, but it appears to be a pain
