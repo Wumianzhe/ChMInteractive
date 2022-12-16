@@ -1,5 +1,5 @@
 import { submitAct } from "./utils_graph.js"
-import { setMethod } from "../graph/main"
+import { getBounds, setMethod } from "../graph/main"
 
 // Выписываем все айдишники HTMl-элементов в константы для переиспользования
 const func_id = 'func'
@@ -72,7 +72,9 @@ sub_btn.onclick = async (e) => {
       obj = { f: func.value, fstp: from.value, sstp: to.value };
       break;
   }
-
+  const bounds = getBounds();
+  obj.low = bounds.x;
+  obj.high = bounds.x + bounds.width;
   const response = await submitAct(method, obj)
   const data = await response.json()
   res_text.innerHTML = 'Root: ' + data.result

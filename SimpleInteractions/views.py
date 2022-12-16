@@ -12,7 +12,6 @@ from django.contrib.auth.models import User
 #from django.contrib.auth.hashers import make_password, check_password
 from django.shortcuts import render, redirect
 from SimpleInteractions.models import Method
-#from SimpleInteractions.models import UserLogin
 from .models import Method
 import numpy as np
 from django.contrib import messages
@@ -38,9 +37,11 @@ def bisection_response(request, *args, **kwargs):
     f = lambdify(x,request.GET["f"])
     a = float(request.GET["from"])
     b = float(request.GET["to"])
+    low = float(request.GET["low"])
+    high = float(request.GET["high"])
     (intervals, result) = bisection(f, a, b, (1e-6)*abs(b-a))
     resdict = {
-        "f": [{"x":x,"y":f(x)} for x in np.linspace(-10,10,200)],
+        "f": [{"x":x,"y":f(x)} for x in np.linspace(low,high,500)],
         "intervals" : intervals,
         "result" : result,
     }
@@ -89,8 +90,8 @@ def theory_introduction(request):
 def newton_theory(request):
     return render(request,"THEORY/NEWTON.html")
 
-def about(request):
-    return render(request,"ABOUT.html")
+def edit(request):
+    return("penis")
 
 def user_signup(request):
     if request.method == 'POST':

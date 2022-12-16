@@ -45,8 +45,7 @@ export class Scene extends Container {
     }
 
     /**
-     * In place transform of "real" coordinates to pixel coordinates
-     * Intended to be used as lambda
+     * Transform "math" coordinates to pixel coordinates
      * @param p - point to be transformed
      */
     remap(x: number | "left" | "right", y: number | "top" | "bottom") {
@@ -72,9 +71,13 @@ export class Scene extends Container {
         return this.view;
     }
 
+    /**
+     * get size of one unit in math coordinates on screen
+     * @param unit - unit size
+     */
     getScale(unit: number) {
-        const scaleX = this.sceneWidth * (unit / this.view.width) // size of one math unit on scene in X direction
-        const scaleY = this.sceneHeight * (unit / this.view.height) // size of one math unit on scene in Y direction
+        const scaleX = this.sceneWidth * (unit / this.view.width)
+        const scaleY = this.sceneHeight * (unit / this.view.height)
         return { scaleX, scaleY }
     }
 

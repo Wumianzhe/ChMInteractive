@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
+    'ckeditor',
 ]
 
 CSRF_TRUSTED_ORIGINS = ['http://localhost:1234', 'http://localhost:8080']
@@ -137,7 +138,7 @@ USE_TZ = True
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
-
+#STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = '/static/'
 
 # Default primary key field type

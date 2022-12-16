@@ -1,4 +1,4 @@
-import { Renderer, Ticker, UPDATE_PRIORITY } from 'pixi.js'
+import { Rectangle, Renderer, Ticker, UPDATE_PRIORITY } from 'pixi.js'
 import { unwrapBisect, unwrapSecant } from '../utils/unwrap'
 import { Scene } from './scene'
 
@@ -71,4 +71,8 @@ export function setMethod(data: any, method: string) {
             console.log("Incorrect input")
             return
     }
+}
+
+export function getBounds() : Rectangle {
+    return scene.view;
 }
