@@ -15,6 +15,8 @@ from SimpleInteractions.models import Method
 #from SimpleInteractions.models import UserLogin
 from .models import Method
 import numpy as np
+from django.contrib import messages
+
 #bisection method
 
 
@@ -69,20 +71,14 @@ def home_template(request):
 def graph(request):
     return render(request,"graph.html")
 
-def graph_bisection(request):
-    return render(request,"GRAPH_HTML/BISECTION.html")
-
-def graph_secant(request):
-    return render(request,"GRAPH_HTML/SECANT.html")
-
-def graph_newton(request):
-    return render(request,"GRAPH_HTML/NEWTON.html")
 
 def theory(request):
     return render(request,"THEORY/INTRO.html")
 
 def bisect_theory(request):
-    return render(request,"THEORY/BISECTION.html")
+    test_bisect_decription = Method.objects.get(name = "bisection")
+    description = test_bisect_decription.description
+    return render(request,"THEORY/BISECTION.html", {'description':description})
 
 def secant_theory(request):
     return render(request,"THEORY/SECANT.html")
@@ -104,21 +100,22 @@ def user_signup(request):
         passwd = request.POST['password']
         user = User.objects.create_user(username = f_n, first_name = f_n, last_name = l_n, email = eml, password=passwd)
         user.save()
-        #encrypted_passwd = make_password(request.POST['password'])
-        #check_passwd = check_password(request.POST['password'], encrypted_passwd)
-        #new_user = UserLogin(first_name = f_n, last_name = l_n, email = eml, password = encrypted_passwd, is_authenticated = True)
-        #new_user.save()
-        return redirect("home")
-    return redirect("home")  
+        login(request, user)
+        return redirect(request.GET.get('next_up'))
 
 def user_login(request):
+    context = {}
     if request.method == 'POST':
         usrn = request.POST['username']
         passwd = request.POST['password']
         user = authenticate(request, username = usrn, password = passwd)
         if user is not None:
             login(request, user)
-    return redirect('home')
+            return redirect(request.GET.get('next'))
+        else:
+            messages.error(request,'Try again later')
+            return redirect(request.GET.get('next'))
+    
 
 def user_logout(request):
     logout(request)

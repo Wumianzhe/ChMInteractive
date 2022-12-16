@@ -13,7 +13,6 @@
           <header class="d-flex flex-wrap align-items-center justify-content-center py-3 mb-4 border-bottom">
           
             <div class="col-md-3"></div>
-
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
               <li><a href="/home" class="nav-link px-2 link-dark">Home</a></li>
               <li><a href="/graph" class="nav-link px-2 link-dark">Graph</a></li>
@@ -45,8 +44,9 @@
                     </div>
               
                     <div class="modal-body p-5 pt-0">
-                      <form class="" action="/user_signup" method="post">
+                      <form class="" action="/user_signup?next_up={{request.path}}" method="post">
                         {% csrf_token %}
+                        <input type="hidden" name="next_up" value="{{next_up}}"/>
                         <div class="form-floating mb-3">
                           <input type="email" class="form-control rounded-3" id="EmailInput" name = "email" required>
                           <label for="floatingInput">Email address</label>
@@ -82,8 +82,9 @@
                     </div>
               
                     <div class="modal-body p-5 pt-0">
-                      <form class="" action="/user_login" method="post">
-                          {% csrf_token %}
+                      <form class="" action="/user_login?next={{request.path}}" method="post">
+                          {% csrf_token %}  
+                          <input type="hidden" name="next" value="{{next}}"/>
                         <div class="form-floating mb-3">
                           <input type="text" class="form-control rounded-3" id="UsernameInput" name = "username" required>
                           <label for="floatingInput">Email address</label>
@@ -93,15 +94,29 @@
                           <label for="floatingPassword">Password</label>
                         </div>
                         <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Login</button>
+                        
                       </form>
                     </div>
                   </div>
                 </div>
               </div>
-
             </div>
 
           </header>
+          {% if messages %}
+            <!-- <ul class="messages">
+              {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+              {% endfor %}
+            </ul> -->
+            {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+
+          {% endif %}
            {% block content %}
            {% endblock %}
       <!-- JavaScript Bundle with Popper -->
