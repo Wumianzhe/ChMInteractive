@@ -17,14 +17,14 @@ def bisection(f, a, b, eps):
 #secant method		
 def secant(f, x_0, x_1, eps):
     points = []
-    points.append((x_0,f(x_0)))
-    points.append((x_1,f(x_1)))
+    points.append({"x":x_0,"fx":f(x_0)})
+    points.append({"x":x_1,"fx":f(x_1)})
     prev = x_0
     cur = x_1
     next = prev
     prev = cur
     cur = cur + (cur - next) / (f(next) / f(cur) - 1)
-    points.append((cur, f(cur)))
+    points.append({"x":cur, "fx":f(cur)})
     while(abs(next-cur)>abs(eps*next)):
         next = prev
         prev = cur

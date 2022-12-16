@@ -2,9 +2,8 @@ import { Function, Bisect, Newton, Secant } from "./types"
 
 // assumed use is as bound function in graph object
 export function drawFunction(this: any, _?: number) {
-    console.log("function")
     this.clear();
-    this.lineStyle(2, 0x239b56 )
+    this.lineStyle(2, 0x239b56)
     const f = this.f as Function
     this.moveTo(f.values[0].x, f.values[0].y);
     f.values.forEach((p) => {
@@ -16,7 +15,7 @@ export function drawFunction(this: any, _?: number) {
 // assumes existence of "m" member, which represents drawn method
 export function drawBisectStep(this: any, index: number) {
     this.clear();
-    this.lineStyle(2, 0xc0392b )
+    this.lineStyle(2, 0xc0392b)
     const m = this.m as Bisect
     this.moveTo(m.iters[index].a, "top").lineTo(m.iters[index].a, "bottom");
     this.moveTo(m.iters[index].b, "top").lineTo(m.iters[index].b, "bottom");

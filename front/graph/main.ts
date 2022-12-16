@@ -44,9 +44,7 @@ container.addEventListener("mouseup", (event: any) => {
     scene.panToggle(origin);
 });
 
-// main loop (paint, events)
 const ticker = new Ticker();
-// ticker.maxFPS = 60;
 ticker.add(loop, UPDATE_PRIORITY.LOW)
 ticker.start()
 

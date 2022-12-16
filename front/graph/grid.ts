@@ -103,7 +103,7 @@ export class Grid extends Graphics {
 
         for (let i = low; i <= high; i += this.unit) {
             this.moveTo(i, "top").lineTo(i, "bottom");
-            let text = new Text(i.toString());
+            let text = new Text(i.toPrecision(4));
             const coords = this.parent.remap(i, 0);
             text.position.set(coords.x, coords.y)
             this.addChild(text);
@@ -112,7 +112,7 @@ export class Grid extends Graphics {
         low = this.unit * Math.floor((this.view.y - this.view.height) / this.unit);
         for (let i = low; i <= high; i += this.unit) {
             this.moveTo("left", i).lineTo("right", i);
-            let text = new Text(i.toString());
+            let text = new Text(i.toPrecision(4));
             const coords = this.parent.remap(0, i);
             text.position.set(coords.x, coords.y)
             this.addChild(text);

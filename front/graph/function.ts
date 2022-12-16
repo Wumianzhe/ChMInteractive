@@ -3,14 +3,13 @@ import { Scene } from "./scene"
 import { Function, Method } from "../utils/types"
 
 
+// TODO style as config parameter
 export class Graph extends Graphics {
     override parent: Scene;
     f?: Function
     m?: Method
     // @ts-expect-error used only in update, which is empty by default
     private iter: number = 0;
-    public update: (_: number) => void = (_?: number) => {
-    };
 
     override moveTo(x: number | "left" | "right", y: number | "top" | "bottom") {
         const coords = this.parent.remap(x, y);
@@ -23,7 +22,7 @@ export class Graph extends Graphics {
         return this
     }
 
-    constructor(parent: Scene, obj: Function | Method) {
+    constructor(parent: Scene, obj: Function | Method, public update: (_: number) => void) {
         super()
 
         // type guard
@@ -38,8 +37,5 @@ export class Graph extends Graphics {
         }
 
         this.parent = parent;
-    }
-    setDrawFunction(func: (this: any, index: number) => void) {
-        this.update = func;
     }
 }

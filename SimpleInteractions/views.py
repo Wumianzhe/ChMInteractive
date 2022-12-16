@@ -23,9 +23,11 @@ def secant_response(request, *args, **kwargs):
     f = lambdify(x,request.GET["f"])
     fstp = float(request.GET["fstp"])
     sstp = float(request.GET["sstp"])
+    low = float(request.GET["low"])
+    high = float(request.GET["high"])
     (points, result) = secant(f, fstp, sstp, 1e-6)
     resdict = {
-        "f": [{"x":x,"y":f(x)} for x in np.linspace(-10,10,200)],
+        "f": [{"x":x,"y":f(x)} for x in np.linspace(low,high,500)],
         "points" : points,
         "result" : result,
     }
