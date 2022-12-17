@@ -5,7 +5,7 @@ from sympy import lambdify
 def bisection(f, a, b, eps):
     intervals = []
     while(abs(b - a)> 2 * eps):
-        intervals.append((a,b))
+        intervals.append({"a":a,"b":b})
         c = (a + b) / 2
         if (f(a) * f(c) < 0):
             b = c
@@ -17,40 +17,35 @@ def bisection(f, a, b, eps):
 #secant method		
 def secant(f, x_0, x_1, eps):
     points = []
-    points.append((x_0,f(x_0)))
-    points.append((x_1,f(x_1)))
+    points.append({"x":x_0,"fx":f(x_0)})
+    points.append({"x":x_1,"fx":f(x_1)})
     prev = x_0
     cur = x_1
     next = prev
     prev = cur
     cur = cur + (cur - next) / (f(next) / f(cur) - 1)
-    points.append((cur, f(cur)))
-    while(abs(next-cur)>abs(eps*next)):
+    points.append({"x":cur, "fx":f(cur)})
+    while(abs(pow(next-cur,1.61))/2>abs(eps)):
         next = prev
         prev = cur
+        if (f(cur) == 0):
+            break
         cur = cur + (cur - next) / (f(next) / f(cur) - 1)
-        points.append((cur, f(cur)))
+        points.append({"x":cur,"fx":f(cur)})
     return (points, cur)
 #Newton method
-def newton(func, a, b, e):
+def newton(func, x_prev, e):
     intervals = []
     fder = diff(func)
-    sder = diff(fder)
     f = lambdify(x, func)
-    fderl = lambdify(x,sder)
-    sderl = lambdify(x,fder)
-    while (abs(a - b) > 2 * e):
-        intervals.append((a, b))
-        if (f(a) * sderl(a) < 0):
-            a = a - f(a) * (a - b) / (f(a) - f(b))
-        elif (f(a) * sderl(a) > 0):
-            a = a - f(a) / fderl(a)
-        if (f(b) * sderl(b) < 0):
-            b - f(b) * (b - a) / (f(b) - f(a))
-        elif (f(b) * sderl(b) > 0):
-            b = b - f(b) / fderl(b)
-    intervals.append((a, b))
-    result = (a + b) / 2
+    fderl = lambdify(x,fder)
+    x_cur = x_prev - f(x_prev)/fderl(x_prev)
+    while (abs(x_prev - x_cur) >  e):
+        intervals.append((x_prev, f(x_prev)))
+        x_prev = x_cur
+        x_cur = x_prev - f(x_prev)/fderl(x_prev)
+    intervals.append((x_cur, f(x_cur)))
+    result = x_cur
     return (intervals, result)
 
 

@@ -1,0 +1,74 @@
+{% extends './base.html' %}
+
+{% block head_script %} 
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    {% load static %}
+    <script type="module" src="{% static 'scripts/graph.bundle.js' %}"></script>
+
+{% endblock %}
+
+{% block container %} <div class="container" style="height: 800px; padding-left: 0.1rem; padding-right: 0.1rem; max-width: 80%;  min-width: 800px;"> {% endblock %}
+
+{% block content %}
+<div class="container-fluid"></div>
+  <div class="row" style="height: 800px;">
+
+      <div class="flex-column" style="max-width: 20%; border-radius: 5px; height: min-content; background-color: lightgray;">
+          <!--form action="#" method="post" enctype="multipart/form-data"-->
+
+          <div class="form-group" style="padding-top: 20px">
+            <label>Function:</label>
+            <input type="text" class="form-control" id="func" placeholder="f(x)" name="func">
+        </div>
+        <br/>
+        <div class="form-group">
+            <div class="row">
+                <label class="Bisection">Limits:</label>
+                <label class="Secant" style="display:none">Start points</label>
+                <label class="Newton" style="display:none">Starting point</label>
+                <div class="col-sm-5"><input type="number" class="form-control" id="from" placeholder="a" name="from"></div>
+                <div class="col-sm-5"><input type="number" class="form-control Bisection Secant" id="to" placeholder="b" name="to"></div>
+            </div>
+            <br/>
+        </div>
+        <br/>
+        <button type="submit" class="btn btn-primary" id = "sub_btn">Plot</button>
+        <br/>
+        <div class="form-group" style="margin-top: 20px; padding-bottom: 20px;">
+            <label id="text_id" style="visibility: hidden;">
+            </label>
+        </div>
+
+          <!--/form-->
+      </div>
+
+      <div class="flex-column" style="min-width: 600px; width: 60%; padding: 50px;">
+        <div class="col-lg" id="pixi-content" style="border: 1px solid #000000; border-radius: 5px; height:100%; max-height:800px; display: flex; justify-content:center">
+        <canvas id="pixi-canvas"/>
+        </div>
+      </div>
+      
+      
+
+      <div class="d-flex flex-column-reverse flex-shrink-0 p-3 order-md-last" style="width: 15%; width: min-content; border-radius: 5px; height: min-content; background-color: lightgray;">
+        
+        <div class="btn-group-vertical" role="group" aria-label="Basic radio toggle button group">
+          <input type="radio" class="btn-check" name="btnradio" id="btn_bes" autocomplete="off" checked>
+          <label class="btn btn-outline-primary" for="btn_bes"> Бисекция </label>
+        
+          <input type="radio" class="btn-check" name="btnradio" id="btn_sec" autocomplete="off">
+          <label class="btn btn-outline-primary" for="btn_sec"> Секущие </label>
+        
+          <input type="radio" class="btn-check" name="btnradio" id="btn_new" autocomplete="off">
+          <label class="btn btn-outline-primary" for="btn_new"> Ньютона </label>
+        </div>
+      </div><!--end slidebar-->
+
+      <!-- end row 1-->
+
+  </div> 
+  </div>
+</div><!-- container clouse div-->
+{% endblock %}

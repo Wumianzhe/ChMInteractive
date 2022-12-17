@@ -1,11 +1,14 @@
 import { Graphics, Rectangle, Text } from "pixi.js"
 import { Scene } from "./scene"
 
+// TODO reorganize styling
 export class Grid extends Graphics {
     override parent: Scene;
     private view: Rectangle;
     private unit: number;
-    private range = { low: 80, high: 200 }
+    // part of unit, but it'll have to be calculated often otherwise
+    private multi: number;
+    private range = { low: 80, high: 200 } //big square size default
     constructor(parent: Scene) {
         super()
 
@@ -13,6 +16,7 @@ export class Grid extends Graphics {
         this.view = parent.getView();
         // placeholders to stop TS complaining
         this.unit = 1;
+        this.multi = 1;
         this.calcScale();
 
         // draw lines
@@ -20,6 +24,7 @@ export class Grid extends Graphics {
         this.drawSecondary();
         this.drawTertiary()
     }
+
     override moveTo(x: number | "left" | "right", y: number | "top" | "bottom") {
         const coords = this.parent.remap(x, y);
         super.moveTo(coords.x, coords.y)
@@ -30,7 +35,9 @@ export class Grid extends Graphics {
         super.lineTo(coords.x, coords.y)
         return this
     }
+    //calculation of new subgrid and subsubgrid sizes
     calcScale() {
+        // check if big square size is in default range
         const predicate = (side: number): boolean => {
             return this.range.low < side && this.range.high > side;
         }
@@ -43,8 +50,8 @@ export class Grid extends Graphics {
             }
             return undefined
         }
-        // 20 is a magic number
-        this.unit = Math.pow(10, Math.floor(Math.log10(this.view.width / 20)));
+        // 10 is a magic number (approx of default view width/100)
+        this.unit = Math.pow(10, Math.floor(Math.log10(this.view.width / 10)));
         let scale = this.parent.getScale(this.unit);
         let factor = tryFactors();
         if (factor === undefined) {
@@ -52,6 +59,7 @@ export class Grid extends Graphics {
                 this.unit *= 10;
                 scale.scaleX *= 10;
                 factor = tryFactors();
+                this.multi = factor ? factor : 1;
                 // fallback to default if still no return value
                 factor ??= 0.1;
                 this.unit *= factor;
@@ -59,6 +67,7 @@ export class Grid extends Graphics {
                 this.unit *= 0.1;
                 scale.scaleX *= 0.1;
                 factor = tryFactors();
+                this.multi = factor ? factor : 1;
                 // fallback to default if still no return value
                 factor ??= 10;
                 this.unit *= factor;
@@ -69,16 +78,17 @@ export class Grid extends Graphics {
 
         console.log(this.unit);
     }
-    update() {
-        this.clear();
+    resize() {
         this.view = this.parent.getView();
         this.calcScale();
-        this.drawMains();
-        this.drawSecondary();
-        this.drawTertiary();
+        this.update();
     }
-    draw(_: number) {
+    update(_?: number) {
         this.clear();
+        // clear children (can't use forEach here)
+        while (this.children[0]) {
+            this.children[0].destroy();
+        }
         this.drawMains();
         this.drawSecondary();
         this.drawTertiary();
@@ -89,28 +99,42 @@ export class Grid extends Graphics {
         this.moveTo("left", 0).lineTo("right", 0);
     }
 
-    // TODO add vertical lines and text numbers
+    // TODO fix numbers font (minor)
     drawSecondary() {
         this.lineStyle(1, 0x000000)
         let low = this.unit * Math.ceil(this.view.x / this.unit);
         let high = this.unit * Math.floor((this.view.x + this.view.width) / this.unit);
-        let text = new Text('R');
-        const coords = this.parent.remap(0, 0);
-        text.position.set(coords.x, coords.y)
-        this.addChild(text);
-
 
         for (let i = low; i <= high; i += this.unit) {
             this.moveTo(i, "top").lineTo(i, "bottom");
+            let text = new Text(i.toPrecision(3));
+            const coords = this.parent.remap(i, 0);
+            text.position.set(coords.x, coords.y)
+            this.addChild(text);
         }
         high = this.unit * Math.ceil(this.view.y / this.unit);
         low = this.unit * Math.floor((this.view.y - this.view.height) / this.unit);
         for (let i = low; i <= high; i += this.unit) {
             this.moveTo("left", i).lineTo("right", i);
+            let text = new Text(i.toPrecision(3));
+            const coords = this.parent.remap(0, i);
+            text.position.set(coords.x, coords.y)
+            this.addChild(text);
         }
     }
     drawTertiary() {
+        var unitSmall = this.unit / ((this.multi == 2) ? 4 : 5);
+        this.lineStyle(0.5, 0x000000, 0.3)
+        let low = unitSmall * Math.ceil(this.view.x / unitSmall);
+        let high = unitSmall * Math.floor((this.view.x + this.view.width) / unitSmall);
 
+        for (let i = low; i <= high; i += unitSmall) {
+            this.moveTo(i, "top").lineTo(i, "bottom");
+        }
+        high = unitSmall * Math.ceil(this.view.y / unitSmall);
+        low = unitSmall * Math.floor((this.view.y - this.view.height) / unitSmall);
+        for (let i = low; i <= high; i += unitSmall) {
+            this.moveTo("left", i).lineTo("right", i);
+        }
     }
-
 }

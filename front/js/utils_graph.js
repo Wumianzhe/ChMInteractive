@@ -7,7 +7,7 @@ function serialize(obj) {
     return str.join("&");
 }
 
-export const submitAct = async (obj) => {
+export const submitAct = async (method, obj) => {
     console.log("It's work!")
     let args = serialize(obj);
     const requestOptions = {
@@ -15,7 +15,7 @@ export const submitAct = async (obj) => {
         origin: 'CHmI',
         headers: { 'Content-Type': 'application/json' },
     };
-    const url = 'http://localhost:8080/bisection_response/?' + args;
+    const url = 'http://localhost:8080/' + method + '_response/?' + args;
     console.log(url);
     const t = fetch(url, requestOptions)
     return t

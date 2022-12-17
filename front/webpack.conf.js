@@ -7,12 +7,12 @@ module.exports = (env, argv) => {
   return ({
     stats: 'minimal', // Keep console output easy to read.
     entry: {
-      main: './graph/test.ts', // Your program entry point
+      main: './graph/main.ts', // Your program entry point
       graph: ['./js/main_graph.js', './js/utils_graph.js']
     },
     // Your build destination
     output: {
-      path: path.resolve(__dirname, '../static'),
+      path: path.resolve(__dirname, '../static/scripts'),
       filename: '[name].bundle.js'
     },
 
@@ -68,21 +68,7 @@ module.exports = (env, argv) => {
     },
 
     plugins: [
-      // Make an index.html from the template
-      new HtmlWebpackPlugin({
-        filename: 'test.html',
-        template: 'graph/test.ejs',
-        chunks: ['main'],
-        hash: true,
-        minify: false
-      })
-      , new HtmlWebpackPlugin({ filename: 'INDEX.html', template: './INDEX.html', chunks: ['graph'] })
-      , new HtmlWebpackPlugin({ filename: 'ABOUT.html', template: './ABOUT.html', chunks: ['graph'] })
-      , new HtmlWebpackPlugin({ filename: 'GRAPH.html', template: './GRAPH.html', chunks: ['graph', 'main'] })
-      , new HtmlWebpackPlugin({ filename: 'THEORY/BISECTION.html', template: './THEORY/BISECTION.html', chunks: [] })
-      , new HtmlWebpackPlugin({ filename: 'THEORY/INTRO.html', template: './THEORY/INTRO.html', chunks: [] })
-      , new HtmlWebpackPlugin({ filename: 'THEORY/SECANT.html', template: './THEORY/SECANT.html', chunks: [] })
-      , new HtmlWebpackPlugin({ filename: 'THEORY/NEWTON.html', template: './THEORY/NEWTON.html', chunks: [] })
+      new HtmlWebpackPlugin({ filename: 'GRAPH.html', template: './GRAPH.html', chunks: ["graph"] })
     ]
   });
 }
