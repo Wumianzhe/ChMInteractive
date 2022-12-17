@@ -53,12 +53,13 @@ def bisection_response(request, *args, **kwargs):
 def newton_response(request, *args, **kwargs):
     f = request.GET["f"]
     fl = lambdify(x,f)
-    a = float(request.GET["from"])
-    b = float(request.GET["to"])
-    (intervals, result) = newton(f, a, b, (1e-6)*abs(b-a))
+    a = float(request.GET["x1"])
+    low = float(request.GET["low"])
+    high = float(request.GET["high"])
+    (points, result) = newton(f, a, (1e-6)*abs(high-low))
     resdict = {
-        "f": [{"x":x,"y":f(x)} for x in np.linspace(-10,10,200)],
-        "intervals" : intervals,
+        "f": [{"x":x,"y":fl(x)} for x in np.linspace(low,high,500)],
+        "points" : [{"x": x, "fx":fx} for (x,fx) in points],
         "result" : result,
     }
     response = HttpResponse(json.dumps(resdict))

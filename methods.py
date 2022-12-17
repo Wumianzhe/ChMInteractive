@@ -25,7 +25,7 @@ def secant(f, x_0, x_1, eps):
     prev = cur
     cur = cur + (cur - next) / (f(next) / f(cur) - 1)
     points.append({"x":cur, "fx":f(cur)})
-    while(abs(next-cur)>abs(eps*next)):
+    while(abs(pow(next-cur,1.61))/2>abs(eps)):
         next = prev
         prev = cur
         if (f(cur) == 0):
