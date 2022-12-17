@@ -53,13 +53,12 @@ def bisection_response(request, *args, **kwargs):
 def newton_response(request, *args, **kwargs):
     f = request.GET["f"]
     fl = lambdify(x,f)
-    a = float(request.GET["x1"])
-    low = float(request.GET["low"])
-    high = float(request.GET["high"])
-    (points, result) = newton(f, a, (1e-6)*abs(high-low))
+    a = float(request.GET["from"])
+    b = float(request.GET["to"])
+    (intervals, result) = newton(f, a, b, (1e-6)*abs(b-a))
     resdict = {
-        "f": [{"x":x,"y":fl(x)} for x in np.linspace(low,high,500)],
-        "points" : [{"x": x, "fx":fx} for (x,fx) in points],
+        "f": [{"x":x,"y":f(x)} for x in np.linspace(-10,10,200)],
+        "intervals" : intervals,
         "result" : result,
     }
     response = HttpResponse(json.dumps(resdict))
@@ -75,26 +74,22 @@ def home_template(request):
 def graph(request):
     return render(request,"graph.html")
 
-
-def theory(request):
-    return render(request,"THEORY/INTRO.html")
-
 def bisect_theory(request):
-    test_bisect_decription = Method.objects.get(name = "bisection")
-    description = test_bisect_decription.description
-    return render(request,"THEORY/BISECTION.html", {'description':description})
+    bisect_decription = Method.objects.get(name = "bisection")
+    bisect_description = bisect_decription.description
+    return render(request,"THEORY/BISECTION.html", {'description':bisect_description})
 
 def secant_theory(request):
-    return render(request,"THEORY/SECANT.html")
+    secant_decription = Method.objects.get(name = "secant").description
+    return render(request,"THEORY/SECANT.html", {'secant_decription':secant_decription})
 
 def theory_introduction(request):
-    return render(request, "THEORY/INTRO.html")
+    intro_decription = Method.objects.get(name = "intro").description
+    return render(request,"THEORY/INTRO.html", {'intro_decription':intro_decription})
 
 def newton_theory(request):
-    return render(request,"THEORY/NEWTON.html")
-
-def edit(request):
-    return("penis")
+    newton_decription = Method.objects.get(name = "newton").description
+    return render(request,"THEORY/NEWTON.html", {'newton_decription':newton_decription})
 
 def user_signup(request):
     if request.method == 'POST':
@@ -108,7 +103,6 @@ def user_signup(request):
         return redirect(request.GET.get('next_up'))
 
 def user_login(request):
-    context = {}
     if request.method == 'POST':
         usrn = request.POST['username']
         passwd = request.POST['password']

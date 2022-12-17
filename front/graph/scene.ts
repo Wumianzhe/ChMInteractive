@@ -6,7 +6,7 @@ import { Point } from "../utils/types"
 export class Scene extends Container {
     private sceneWidth: number;
     private sceneHeight: number;
-    private stepTimer?: NodeJS.Timer = undefined;
+    private stepTimer?: NodeJS.Timer = undefined; //next animation step timer
     private step: number = 0;
     private panPosition: Point = { x: 0, y: 0 };
     private panning: boolean = false;
@@ -36,6 +36,7 @@ export class Scene extends Container {
         // pointer up/down don't seem to work, so I'm using HTML events
         this.on('pointerdown', (e) => {
             console.log("down")
+            //
             this.panToggle({ x: e.data.global.x, y: e.data.global.y })
         }, this)
         this.on('pointerup', (e) => {
@@ -44,9 +45,8 @@ export class Scene extends Container {
         }, this)
     }
 
-    /**
+    /*
      * Transform "math" coordinates to pixel coordinates
-     * @param p - point to be transformed
      */
     remap(x: number | "left" | "right", y: number | "top" | "bottom") {
         let _x: number, _y: number;
@@ -78,9 +78,9 @@ export class Scene extends Container {
     getScale(unit: number) {
         const scaleX = this.sceneWidth * (unit / this.view.width)
         const scaleY = this.sceneHeight * (unit / this.view.height)
-        return { scaleX, scaleY }
+        return { scaleX, scaleY } //square pixel size
     }
-
+    
     resize(width: number, height: number) {
         this.sceneWidth = width;
         this.sceneHeight = height;
@@ -91,10 +91,10 @@ export class Scene extends Container {
         this.updateStatic();
         this.update();
     }
-
+    
     updateStatic() {
         this.grid.resize();
-
+        //check if graph is a function graph (can be method graph)
         function isFunctionGraph(obj: any): obj is Graph {
             return (obj as Graph).f !== undefined
         }
@@ -106,7 +106,7 @@ export class Scene extends Container {
         })
     }
     clearDrawables() {
-        // is a de facto method cleanup
+        // is a de-facto method cleanup
         clearInterval(this.stepTimer)
         this.stepTimer = undefined;
         this.step = 0;
@@ -165,13 +165,14 @@ export class Scene extends Container {
         if (!this.panning) {
             return;
         }
-        const delta = { x: to.x - this.panPosition.x, y: to.y - this.panPosition.y }
+        
+        const delta = { x: to.x - this.panPosition.x, y: to.y - this.panPosition.y } //pixel cursor movement
         const deltaX = delta.x / this.sceneWidth * this.view.width // convert from screen to math coords
         const deltaY = delta.y / this.sceneHeight * this.view.height // convert from screen to math coords
         this.view.x -= deltaX;
         this.view.y += deltaY;
 
-        this.panPosition = to;
+        this.panPosition = to; //update cursor position while moving
 
         this.updateStatic()
         this.update()

@@ -38,11 +38,15 @@
 
       <main class="coll-12 bd-content" style=" margin-left: 20px;">
         <div class="row">
-            {% block header %}{% endblock %}
+            <h1>{% block header %}{% endblock %}</h1>
         </div>
         <hr>
-      {% block content_theory %}
-      {% endblock %}
+        {% block content_theory %}
+        {% endblock %}
+      
+      </main>
+
+  </div><!--end row-->
 
 {% endblock %}
 

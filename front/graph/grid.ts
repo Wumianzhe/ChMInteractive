@@ -8,7 +8,7 @@ export class Grid extends Graphics {
     private unit: number;
     // part of unit, but it'll have to be calculated often otherwise
     private multi: number;
-    private range = { low: 80, high: 200 }
+    private range = { low: 80, high: 200 } //big square size default
     constructor(parent: Scene) {
         super()
 
@@ -24,6 +24,7 @@ export class Grid extends Graphics {
         this.drawSecondary();
         this.drawTertiary()
     }
+
     override moveTo(x: number | "left" | "right", y: number | "top" | "bottom") {
         const coords = this.parent.remap(x, y);
         super.moveTo(coords.x, coords.y)
@@ -34,7 +35,9 @@ export class Grid extends Graphics {
         super.lineTo(coords.x, coords.y)
         return this
     }
+    //calculation of new subgrid and subsubgrid sizes
     calcScale() {
+        // check if big square size is in default range
         const predicate = (side: number): boolean => {
             return this.range.low < side && this.range.high > side;
         }

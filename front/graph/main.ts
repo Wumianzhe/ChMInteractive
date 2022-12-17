@@ -18,15 +18,17 @@ renderer.clearBeforeRender = false
 
 const scene = new Scene(parent.offsetWidth, parent.offsetHeight)
 scene.updateStatic();
-
+//browser window resize
 const resize = () => {
     scene.resize(parent.clientWidth, parent.clientHeight);
     renderer.resize(parent.clientWidth, parent.clientHeight);
 }
 window.addEventListener("resize", resize);
+
+//prevent browser window scrolling
 container.addEventListener("wheel", (event: any) => {
     event.preventDefault()
-
+    //mouse position relative to container
     const origin = { x: event.layerX - event.target.offsetLeft, y: event.layerY - event.target.offsetTop }
     const scale = (event.deltaY < 0) ? 0.933 : 1.071; // ~2^-0.1, ~2^0.1
 
@@ -45,7 +47,7 @@ container.addEventListener("mouseup", (event: any) => {
     const origin = { x: event.layerX - event.target.offsetLeft, y: event.layerY - event.target.offsetTop }
     scene.panToggle(origin);
 });
-
+//frame timer
 const ticker = new Ticker();
 ticker.add(loop, UPDATE_PRIORITY.LOW)
 ticker.start()

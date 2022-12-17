@@ -8,7 +8,6 @@ urlpatterns = [
     path('user_login', views.user_login, name = 'user_login'),
     path('user_logout', views.user_logout, name = 'user_logout'),
     path('graph', views.graph, name='graph'),
-    path('theory', views.theory, name='theory'),
     path('theory/intro', views.theory_introduction, name='theory_introduction'),
     path('theory/bisection', views.bisect_theory, name='bisect_theory'),
     path('theory/secant', views.secant_theory, name='secant_theory'),

@@ -1,10 +1,7 @@
 {% extends './theory_base.html' %}
-{% block header %}<h1>Метод секущих</h1>{% endblock %}
-{% block content_theory %}
-                <p>
-                  Следует дополнить позже                  
-                </p> 
-              </main>
 
-            </div><!--end row-->
+{% block header %} Метод секущих {% endblock %}
+
+{% block content_theory %}
+{{ secant_decription | safe }}
 {% endblock %}
